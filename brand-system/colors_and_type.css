@@ -1,0 +1,232 @@
+/* ============================================================
+   AGENTYX DESIGN SYSTEM — colors_and_type.css
+   Tokens extraídos directo de agentyx.app (Next.js / Tailwind build)
+   Fuente: --background / --foreground / --primary / etc. en globals.css
+   ============================================================ */
+
+/* ---- Fonts (downloaded from agentyx.app) ----
+   Plus Jakarta Sans → headings
+   Inter             → body
+   JetBrains Mono    → eyebrow labels, code, KPIs, technical chrome
+*/
+@font-face {
+  font-family: "Plus Jakarta Sans";
+  font-style: normal;
+  font-weight: 400 800;
+  font-display: swap;
+  src: url("fonts/PlusJakartaSans.woff2") format("woff2");
+}
+@font-face {
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: 300 700;
+  font-display: swap;
+  src: url("fonts/Inter.woff2") format("woff2");
+}
+@font-face {
+  font-family: "JetBrains Mono";
+  font-style: normal;
+  font-weight: 400 500;
+  font-display: swap;
+  src: url("fonts/Mono.woff2") format("woff2");
+}
+
+/* ============================================================
+   COLOR TOKENS — DARK (default, marketing site)
+   ============================================================ */
+:root {
+  /* Surfaces */
+  --ax-bg:            #070b13;             /* hero base — hsl(222 47% 4%) */
+  --ax-bg-elevated:   #0c1220;             /* cards on dark — hsl(222 47% 8%) */
+  --ax-surface:       #111827;             /* card / popover — hsl(222 47% 11%) */
+  --ax-surface-2:     #1f2937;             /* secondary / muted — hsl(217 33% 17%) */
+  --ax-border:        rgba(255,255,255,0.10);
+  --ax-border-strong: rgba(255,255,255,0.18);
+  --ax-divider:       rgba(255,255,255,0.06);
+
+  /* Foreground — slate scale, on dark */
+  --ax-fg:            #f8fafc;             /* slate-50 — hsl(210 40% 98%) */
+  --ax-fg-1:          #e2e8f0;             /* slate-200 */
+  --ax-fg-2:          #cbd5e1;             /* slate-300 */
+  --ax-fg-muted:      #94a3b8;             /* slate-400 — body text on dark */
+  --ax-fg-subtle:     #64748b;             /* slate-500 — meta */
+  --ax-fg-disabled:   #475569;             /* slate-600 */
+
+  /* Brand — azul Agentyx (núcleo de la identidad) */
+  --ax-brand:          #2563eb;            /* blue-600 — botones, CTAs */
+  --ax-brand-strong:   #1d4ed8;            /* blue-700 — hover/press */
+  --ax-brand-soft:     #3b82f6;            /* blue-500 — links */
+  --ax-brand-tint:     rgba(37, 99, 235, 0.10);
+  --ax-brand-glow:     rgba(37, 99, 235, 0.16);
+  --ax-brand-200:      #bfdbfe;            /* texto sobre tint */
+  --ax-brand-100:      #dbeafe;
+
+  /* Accent — cyan (líneas SVG, focus, "active" pulses) */
+  --ax-cyan:           #22d3ee;            /* cyan-400 — focus-visible outline */
+  --ax-cyan-soft:      #67e8f9;            /* cyan-300 */
+  --ax-cyan-tint:      rgba(34, 211, 238, 0.12);
+
+  /* Secondary accent — indigo (dashboards, primary on dark) */
+  --ax-indigo:         #818cf8;            /* hsl(239 84% 75%) */
+  --ax-indigo-strong:  #6366f1;
+
+  /* Semantic — KPIs & system states */
+  --ax-success:        #22d3ee;            /* workos-success teal */
+  --ax-warning:        #f59e0b;            /* workos-hitl amber — "human in the loop" */
+  --ax-danger:         #ef4444;            /* destructive */
+  --ax-neutral:        #94a3b8;            /* kpi-neutral */
+
+  /* Gradients & glows — used on hero / sections */
+  --ax-hero-radial:
+      radial-gradient(circle at 50% 42%, rgba(37,99,235,0.16), transparent 45%),
+      linear-gradient(to bottom, rgba(7,11,19,0.05), #070b13 96%);
+  --ax-brand-gradient: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
+  --ax-brand-glow:     0 4px 24px -4px rgba(37, 99, 235, 0.35);
+  --ax-card-shadow:    0 1px 0 rgba(0,0,0,0.30), 0 12px 28px -20px rgba(0,0,0,0.42);
+  --ax-card-shadow-soft: 0 1px 1px rgba(0,0,0,0.22), 0 10px 24px -18px rgba(0,0,0,0.46);
+
+  /* ============================================================
+     TYPOGRAPHY
+     ============================================================ */
+  --ax-font-heading: "Plus Jakarta Sans", system-ui, -apple-system, "Segoe UI", Arial, sans-serif;
+  --ax-font-body:    "Inter", system-ui, -apple-system, "Segoe UI", Arial, sans-serif;
+  --ax-font-mono:    "JetBrains Mono", ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+
+  --ax-fs-eyebrow:   10px;   /* uppercase mono */
+  --ax-fs-meta:      12px;
+  --ax-fs-body-sm:   13px;
+  --ax-fs-body:      15px;
+  --ax-fs-body-lg:   17px;
+  --ax-fs-h6:        18px;
+  --ax-fs-h5:        20px;
+  --ax-fs-h4:        24px;
+  --ax-fs-h3:        30px;
+  --ax-fs-h2:        40px;
+  --ax-fs-h1:        56px;
+  --ax-fs-display:   72px;
+
+  --ax-lh-tight:     1.05;
+  --ax-lh-snug:      1.20;
+  --ax-lh-normal:    1.55;
+  --ax-lh-loose:     1.70;
+
+  --ax-tracking-tight:   -0.02em;   /* big headings */
+  --ax-tracking-normal:   0em;
+  --ax-tracking-wide:     0.04em;
+  --ax-tracking-eyebrow:  0.14em;
+
+  /* ============================================================
+     SPACING / RADII / ELEVATION
+     ============================================================ */
+  --ax-space-1:   4px;
+  --ax-space-2:   8px;
+  --ax-space-3:   12px;
+  --ax-space-4:   16px;
+  --ax-space-5:   20px;
+  --ax-space-6:   24px;
+  --ax-space-8:   32px;
+  --ax-space-10:  40px;
+  --ax-space-12:  48px;
+  --ax-space-16:  64px;
+  --ax-space-20:  80px;
+  --ax-space-24:  96px;
+
+  --ax-radius-xs:  4px;
+  --ax-radius-sm:  6px;
+  --ax-radius-md:  8px;       /* default — botones, badges */
+  --ax-radius-lg:  12px;      /* cards */
+  --ax-radius-xl:  16px;
+  --ax-radius-2xl: 24px;      /* heroes, modales */
+  --ax-radius-pill: 9999px;   /* lang toggles, eyebrows */
+
+  /* Motion */
+  --ax-ease-out:    cubic-bezier(0.22, 1, 0.36, 1);
+  --ax-ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+  --ax-dur-fast:    150ms;
+  --ax-dur-base:    300ms;
+  --ax-dur-slow:    500ms;
+}
+
+/* ============================================================
+   COLOR TOKENS — LIGHT (panel interno / dashboards)
+   El sitio define el modo claro con :root y dark con .dark;
+   aquí lo expongo como `.ax-light` para uso explícito.
+   ============================================================ */
+.ax-light {
+  --ax-bg:            #f8fafc;             /* hsl(210 40% 98%) */
+  --ax-bg-elevated:   #ffffff;
+  --ax-surface:       #ffffff;
+  --ax-surface-2:     #e2e8f0;
+  --ax-border:        #e2e8f0;
+  --ax-border-strong: #cbd5e1;
+  --ax-divider:       #f1f5f9;
+
+  --ax-fg:            #0f172a;             /* hsl(222 47% 11%) */
+  --ax-fg-1:          #1e293b;
+  --ax-fg-2:          #334155;
+  --ax-fg-muted:      #475569;
+  --ax-fg-subtle:     #64748b;
+  --ax-fg-disabled:   #94a3b8;
+
+  --ax-card-shadow:    0 1px 0 rgba(15,23,42,0.03), 0 12px 30px -22px rgba(15,23,42,0.14);
+  --ax-card-shadow-soft: 0 1px 1px rgba(15,23,42,0.02), 0 8px 26px -18px rgba(15,23,42,0.16);
+}
+
+/* ============================================================
+   SEMANTIC TYPOGRAPHY CLASSES
+   ============================================================ */
+.ax-display, .ax-h1, .ax-h2, .ax-h3, .ax-h4, .ax-h5, .ax-h6 {
+  font-family: var(--ax-font-heading);
+  color: var(--ax-fg);
+  margin: 0;
+  text-wrap: balance;
+}
+.ax-display { font-size: var(--ax-fs-display); font-weight: 700; line-height: var(--ax-lh-tight); letter-spacing: var(--ax-tracking-tight); }
+.ax-h1      { font-size: var(--ax-fs-h1);      font-weight: 700; line-height: var(--ax-lh-tight); letter-spacing: var(--ax-tracking-tight); }
+.ax-h2      { font-size: var(--ax-fs-h2);      font-weight: 700; line-height: var(--ax-lh-snug);  letter-spacing: var(--ax-tracking-tight); }
+.ax-h3      { font-size: var(--ax-fs-h3);      font-weight: 700; line-height: var(--ax-lh-snug); }
+.ax-h4      { font-size: var(--ax-fs-h4);      font-weight: 600; line-height: var(--ax-lh-snug); }
+.ax-h5      { font-size: var(--ax-fs-h5);      font-weight: 600; line-height: var(--ax-lh-snug); }
+.ax-h6      { font-size: var(--ax-fs-h6);      font-weight: 600; line-height: var(--ax-lh-snug); }
+
+.ax-body       { font-family: var(--ax-font-body); font-size: var(--ax-fs-body);    line-height: var(--ax-lh-normal); color: var(--ax-fg-muted); }
+.ax-body-lg    { font-family: var(--ax-font-body); font-size: var(--ax-fs-body-lg); line-height: var(--ax-lh-normal); color: var(--ax-fg-2); }
+.ax-body-sm    { font-family: var(--ax-font-body); font-size: var(--ax-fs-body-sm); line-height: var(--ax-lh-normal); color: var(--ax-fg-muted); }
+.ax-meta       { font-family: var(--ax-font-body); font-size: var(--ax-fs-meta);    line-height: var(--ax-lh-normal); color: var(--ax-fg-subtle); }
+
+.ax-eyebrow {
+  font-family: var(--ax-font-mono);
+  font-size: var(--ax-fs-eyebrow);
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: var(--ax-tracking-eyebrow);
+  color: var(--ax-fg-subtle);
+}
+
+.ax-mono   { font-family: var(--ax-font-mono); font-size: var(--ax-fs-meta); }
+.ax-code   { font-family: var(--ax-font-mono); font-size: var(--ax-fs-body-sm); background: var(--ax-surface-2); padding: 2px 6px; border-radius: var(--ax-radius-xs); color: var(--ax-fg-1); }
+
+/* ============================================================
+   ATOMIC HELPERS used across preview cards
+   ============================================================ */
+.ax-bg-base { background: var(--ax-bg); }
+.ax-card {
+  background: var(--ax-surface);
+  border: 1px solid var(--ax-border);
+  border-radius: var(--ax-radius-lg);
+  box-shadow: var(--ax-card-shadow);
+}
+.ax-focus-ring:focus-visible {
+  outline: 2px solid var(--ax-cyan);
+  outline-offset: 4px;
+}
+
+/* Reset for preview cards */
+html, body { margin: 0; padding: 0; }
+body {
+  font-family: var(--ax-font-body);
+  background: var(--ax-bg);
+  color: var(--ax-fg);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
