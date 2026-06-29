@@ -358,6 +358,45 @@
         pointer-events: none;
         z-index: 1;
       }
+
+      /* PRINT RULES FOR NATIVE PDF EXPORT */
+      @media print {
+        body, html {
+          background: #070b13 !important;
+          -webkit-print-color-adjust: exact !important;
+          print-color-adjust: exact !important;
+          overflow: visible !important;
+          width: 1920px !important;
+          height: auto !important;
+        }
+        
+        .deck-viewport {
+          transform: none !important;
+          width: 1920px !important;
+          height: auto !important;
+          box-shadow: none !important;
+          background: #070b13 !important;
+        }
+        
+        .slide {
+          display: flex !important;
+          position: relative !important;
+          page-break-after: always !important;
+          break-after: page !important;
+          width: 1920px !important;
+          height: 1080px !important;
+          box-sizing: border-box !important;
+          background: #070b13 !important;
+        }
+        
+        .controls {
+          display: none !important;
+        }
+
+        .cyan-curves-bg {
+          opacity: 0.22 !important;
+        }
+      }
     </style>
   </head>
   <body>

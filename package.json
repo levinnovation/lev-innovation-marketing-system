@@ -8,5 +8,8 @@
     "check:agentyx": "cd videos/agentyx-product-promo && npx --yes hyperframes@0.7.7 lint && npx --yes hyperframes@0.7.7 validate && npx --yes hyperframes@0.7.7 inspect --samples 15",
     "snapshot:agentyx": "cd videos/agentyx-product-promo && npx --yes hyperframes@0.7.7 snapshot . --at 2.6,5.9,10.4,14.8,18.2",
     "render:agentyx": "cd videos/agentyx-product-promo && npx --yes hyperframes@0.7.7 render --output renders/agentyx-product-promo.mp4"
+  },
+  "devDependencies": {
+    "puppeteer": "^25.2.1"
   }
 }
