@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Agentyx Pitch Deck Template</title>
+    <!-- Link to central design system -->
+    <link rel="stylesheet" href="../../brand-system/colors_and_type.css" />
+    <style>
+      :root {
+        --slide-width: 1920px;
+        --slide-height: 1080px;
+        background: #000;
+        overflow: hidden;
+      }
+
+      body {
+        margin: 0;
+        padding: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 100vw;
+        height: 100vh;
+        background: #000;
+      }
+
+      /* Slide container with scale translation to maintain 16:9 aspect ratio */
+      .deck-viewport {
+        position: relative;
+        width: var(--slide-width);
+        height: var(--slide-height);
+        background: var(--ax-bg);
+        overflow: hidden;
+        transform-origin: center center;
+        box-shadow: 0 25px 70px rgba(0,0,0,0.8);
+      }
+
+      .slide {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        padding: var(--ax-space-16) var(--ax-space-20);
+        display: none;
+        box-sizing: border-box;
+      }
+
+      .slide.active {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+      }
+
+      /* Slide layouts */
+      .slide-cover {
+        justify-content: center !important;
+        align-items: center;
+        text-align: center;
+        position: relative;
+      }
+
+      .slide-cover .radial-glow {
+        position: absolute;
+        inset: 0;
+        background: radial-gradient(circle at 50% 45%, rgba(37,99,235,0.15), transparent 50%);
+        pointer-events: none;
+        z-index: 0;
+      }
+
+      .slide-cover .content {
+        position: relative;
+        z-index: 1;
+        max-width: 1200px;
+      }
+
+      .slide-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        border-bottom: 1px solid var(--ax-divider);
+        padding-bottom: var(--ax-space-4);
+      }
+
+      .slide-header .title-group {
+        display: flex;
+        flex-direction: column;
+        gap: var(--ax-space-2);
+      }
+
+      .logo-group {
+        display: flex;
+        align-items: center;
+        gap: var(--ax-space-3);
+      }
+
+      .logo-group img {
+        width: 32px;
+        height: 32px;
+        object-fit: contain;
+      }
+
+      .logo-group span {
+        font-family: var(--ax-font-heading);
+        font-size: var(--ax-fs-h5);
+        font-weight: 700;
+        color: var(--ax-fg);
+      }
+
+      .slide-content {
+        flex-grow: 1;
+        margin-top: var(--ax-space-10);
+        display: grid;
+        align-content: start;
+      }
+
+      .slide-footer {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        border-top: 1px solid var(--ax-divider);
+        padding-top: var(--ax-space-4);
+        font-family: var(--ax-font-mono);
+        font-size: var(--ax-fs-meta);
+        color: var(--ax-fg-subtle);
+      }
+
+      /* Grid helpers for content */
+      .grid-2 {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: var(--ax-space-8);
+      }
+
+      .grid-3 {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: var(--ax-space-6);
+      }
+
+      /* Card components */
+      .presentation-card {
+        background: var(--ax-surface);
+        border: 1px solid var(--ax-border);
+        border-radius: var(--ax-radius-lg);
+        padding: var(--ax-space-6);
+        box-shadow: var(--ax-card-shadow);
+      }
+
+      .presentation-card h3 {
+        color: var(--ax-fg);
+        margin: 0 0 var(--ax-space-3);
+      }
+
+      .presentation-card p {
+        color: var(--ax-fg-muted);
+        margin: 0;
+        font-size: var(--ax-fs-body);
+      }
+
+      /* Bullet lists */
+      ul.bullets {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        display: flex;
+        flex-direction: column;
+        gap: var(--ax-space-4);
+      }
+
+      ul.bullets li {
+        font-family: var(--ax-font-body);
+        font-size: var(--ax-fs-body-lg);
+        color: var(--ax-fg-muted);
+        display: flex;
+        align-items: center;
+        gap: var(--ax-space-4);
+      }
+
+      ul.bullets li::before {
+        content: "";
+        display: inline-block;
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background: var(--ax-cyan);
+        box-shadow: 0 0 6px var(--ax-cyan);
+      }
+
+      /* Controls */
+      .controls {
+        position: absolute;
+        bottom: var(--ax-space-6);
+        right: var(--ax-space-6);
+        display: flex;
+        gap: var(--ax-space-2);
+        z-index: 100;
+      }
+
+      .control-btn {
+        background: rgba(255, 255, 255, 0.05);
+        border: 1px solid var(--ax-border);
+        color: var(--ax-fg-1);
+        padding: var(--ax-space-2) var(--ax-space-4);
+        font-family: var(--ax-font-mono);
+        font-size: var(--ax-fs-body-sm);
+        border-radius: var(--ax-radius-sm);
+        cursor: pointer;
+        transition: all 0.2s ease;
+      }
+
+      .control-btn:hover {
+        background: var(--ax-brand-tint);
+        border-color: var(--ax-brand-soft);
+        color: #fff;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="deck-viewport" id="viewport">
+      
+      <!-- SLIDE 1: COVER -->
+      <div class="slide active slide-cover" id="slide-1">
+        <div class="radial-glow"></div>
+        <div class="content">
+          <div class="logo-group" style="justify-content: center; margin-bottom: var(--ax-space-6);">
+            <img src="../../brand-system/assets/agentyx-logo.png" alt="Logo" />
+            <span style="letter-spacing: var(--ax-tracking-wide)">Agentyx</span>
+          </div>
+          <div class="ax-eyebrow" style="color: var(--ax-cyan-soft); margin-bottom: var(--ax-space-4)">PRESENTACIÓN CORPORATIVA</div>
+          <h1 class="ax-display" style="margin-bottom: var(--ax-space-6)">
+            La Era de los <span style="color: var(--ax-brand-soft)">AI Employees</span>
+          </h1>
+          <p class="ax-body-lg" style="max-width: 800px; margin: 0 auto; color: var(--ax-fg-muted)">
+            Automatización operativa autónoma y coordinada de extremo a extremo en sistemas empresariales.
+          </p>
+        </div>
+        <div class="slide-footer" style="position: absolute; bottom: var(--ax-space-16); left: var(--ax-space-20); right: var(--ax-space-20); border: none;">
+          <span>Lev Innovation · 2026</span>
+          <span>Slide 1 / 3</span>
+        </div>
+      </div>
+
+      <!-- SLIDE 2: THE PROBLEM -->
+      <div class="slide" id="slide-2">
+        <div class="slide-header">
+          <div class="title-group">
+            <div class="ax-eyebrow" style="color: var(--ax-fg-subtle)">EL DESAFÍO OPERATIVO</div>
+            <h2 class="ax-h2">La Carpintería Operativa Corporativa</h2>
+          </div>
+          <div class="logo-group">
+            <img src="../../brand-system/assets/agentyx-logo.png" alt="Logo" />
+            <span>Agentyx</span>
+          </div>
+        </div>
+
+        <div class="slide-content grid-2">
+          <div>
+            <p class="ax-body-lg" style="margin-bottom: var(--ax-space-8)">
+              Los equipos de operaciones dedican hasta el 70% de su tiempo a tareas mecánicas de cruce de datos, validación manual y sincronización entre plataformas.
+            </p>
+            <ul class="bullets">
+              <li>Copiar datos entre ERPs y CRMs legados</li>
+              <li>Perseguir aprobaciones por correo y chats</li>
+              <li>Consultar inventarios y coordinar entregas manualmente</li>
+            </ul>
+          </div>
+          <div class="grid-2">
+            <div class="presentation-card">
+              <div class="ax-eyebrow" style="color: var(--ax-cyan)">LENTITUD</div>
+              <h3 class="ax-h3" style="color: var(--ax-cyan); font-family: var(--ax-font-mono)">Horas</h3>
+              <p>Tiempo promedio para responder solicitudes rutinarias de leads o facturas.</p>
+            </div>
+            <div class="presentation-card">
+              <div class="ax-eyebrow" style="color: var(--ax-danger)">ERRORES</div>
+              <h3 class="ax-h3" style="color: var(--ax-danger); font-family: var(--ax-font-mono)">12%</h3>
+              <p>Tasa promedio de error humano en entradas repetitivas de datos.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="slide-footer">
+          <span>Agentyx · Operaciones Eficientes</span>
+          <span>Slide 2 / 3</span>
+        </div>
+      </div>
+
+      <!-- SLIDE 3: THE SOLUTION -->
+      <div class="slide" id="slide-3">
+        <div class="slide-header">
+          <div class="title-group">
+            <div class="ax-eyebrow" style="color: var(--ax-fg-subtle)">NUESTRA SOLUCIÓN</div>
+            <h2 class="ax-h2">Empleados de IA en Producción</h2>
+          </div>
+          <div class="logo-group">
+            <img src="../../brand-system/assets/agentyx-logo.png" alt="Logo" />
+            <span>Agentyx</span>
+          </div>
+        </div>
+
+        <div class="slide-content grid-3">
+          <div class="presentation-card">
+            <div class="ax-eyebrow" style="color: var(--ax-brand-soft)">CONECTADOS</div>
+            <h3 class="ax-h4">Integración Total</h3>
+            <p>Operan directamente en tus ERPs, CRMs, WhatsApp, bases de datos y emails sin requerir APIs propietarias complejas.</p>
+          </div>
+          <div class="presentation-card">
+            <div class="ax-eyebrow" style="color: var(--ax-cyan)">AUTÓNOMOS</div>
+            <h3 class="ax-h4">Operación 24/7</h3>
+            <p>Atienden y completan flujos operativos enteros de forma independiente sin ampliar headcount humano.</p>
+          </div>
+          <div class="presentation-card">
+            <div class="ax-eyebrow" style="color: var(--ax-success)">BAJO CONTROL</div>
+            <h3 class="ax-h4">Gobernanza Total</h3>
+            <p>Bitácoras detalladas paso a paso y escalamiento humano automático (Human-in-the-loop) cuando se requiere criterio crítico.</p>
+          </div>
+        </div>
+
+        <div class="slide-footer">
+          <span>Agentyx · La Plataforma</span>
+          <span>Slide 3 / 3</span>
+        </div>
+      </div>
+
+      <!-- CONTROLS -->
+      <div class="controls">
+        <button class="control-btn" id="prev-btn">ANTERIOR</button>
+        <button class="control-btn" id="next-btn">SIGUIENTE</button>
+      </div>
+    </div>
+
+    <script>
+      // Slide manager
+      const slides = document.querySelectorAll(".slide");
+      let currentSlide = 0;
+
+      function showSlide(index) {
+        slides[currentSlide].classList.remove("active");
+        currentSlide = (index + slides.length) % slides.length;
+        slides[currentSlide].classList.add("active");
+      }
+
+      document.getElementById("prev-btn").addEventListener("click", () => {
+        showSlide(currentSlide - 1);
+      });
+
+      document.getElementById("next-btn").addEventListener("click", () => {
+        showSlide(currentSlide + 1);
+      });
+
+      // Keyboard support
+      window.addEventListener("keydown", (e) => {
+        if (e.key === "ArrowRight" || e.key === " ") {
+          showSlide(currentSlide + 1);
+        } else if (e.key === "ArrowLeft") {
+          showSlide(currentSlide - 1);
+        }
+      });
+
+      // Scale slide viewport to fit screen
+      const viewport = document.getElementById("viewport");
+      function resizeViewport() {
+        const w = window.innerWidth;
+        const h = window.innerHeight;
+        const scale = Math.min(w / 1920, h / 1080);
+        viewport.style.transform = `scale(${scale})`;
+      }
+
+      window.addEventListener("resize", resizeViewport);
+      resizeViewport();
+    </script>
+  </body>
+</html>
