@@ -1,371 +1,350 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Agentyx Pitch Deck Template</title>
-    <!-- Link to central design system -->
     <link rel="stylesheet" href="../../brand-system/colors_and_type.css" />
+    <link rel="stylesheet" href="../../brand-system/presentation.css" />
+    <link rel="stylesheet" href="../../lev-brand-system/colors_and_type.css" />
     <style>
-      :root {
-        --slide-width: 1920px;
-        --slide-height: 1080px;
-        background: #000;
-        overflow: hidden;
-      }
-
       body {
         margin: 0;
-        padding: 0;
         display: flex;
         align-items: center;
         justify-content: center;
-        width: 100vw;
-        height: 100vh;
-        background: #000;
+        min-height: 100vh;
+        background: #1a1a2e;
       }
-
-      /* Slide container with scale translation to maintain 16:9 aspect ratio */
-      .deck-viewport {
-        position: relative;
-        width: var(--slide-width);
-        height: var(--slide-height);
-        background: var(--ax-bg);
-        overflow: hidden;
-        transform-origin: center center;
-        box-shadow: 0 25px 70px rgba(0,0,0,0.8);
-      }
-
-      .slide {
-        position: absolute;
-        inset: 0;
-        width: 100%;
-        height: 100%;
-        padding: var(--ax-space-16) var(--ax-space-20);
-        display: none;
-        box-sizing: border-box;
-      }
-
-      .slide.active {
-        display: flex;
-        flex-direction: column;
-        justify-content: space-between;
-      }
-
-      /* Slide layouts */
-      .slide-cover {
-        justify-content: center !important;
-        align-items: center;
-        text-align: center;
-        position: relative;
-      }
-
-      .slide-cover .radial-glow {
-        position: absolute;
-        inset: 0;
-        background: radial-gradient(circle at 50% 45%, rgba(37,99,235,0.15), transparent 50%);
-        pointer-events: none;
-        z-index: 0;
-      }
-
-      .slide-cover .content {
-        position: relative;
-        z-index: 1;
-        max-width: 1200px;
-      }
-
-      .slide-header {
-        display: flex;
-        justify-content: space-between;
-        align-items: flex-start;
-        border-bottom: 1px solid var(--ax-divider);
-        padding-bottom: var(--ax-space-4);
-      }
-
-      .slide-header .title-group {
-        display: flex;
-        flex-direction: column;
-        gap: var(--ax-space-2);
-      }
-
-      .logo-group {
-        display: flex;
-        align-items: center;
-        gap: var(--ax-space-3);
-      }
-
-      .logo-group img {
-        width: 32px;
-        height: 32px;
-        object-fit: contain;
-      }
-
-      .logo-group span {
-        font-family: var(--ax-font-heading);
-        font-size: var(--ax-fs-h5);
-        font-weight: 700;
-        color: var(--ax-fg);
-      }
-
-      .slide-content {
-        flex-grow: 1;
-        margin-top: var(--ax-space-10);
-        display: grid;
-        align-content: start;
-      }
-
-      .slide-footer {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        border-top: 1px solid var(--ax-divider);
-        padding-top: var(--ax-space-4);
-        font-family: var(--ax-font-mono);
-        font-size: var(--ax-fs-meta);
-        color: var(--ax-fg-subtle);
-      }
-
-      /* Grid helpers for content */
-      .grid-2 {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        gap: var(--ax-space-8);
-      }
-
-      .grid-3 {
-        display: grid;
-        grid-template-columns: repeat(3, 1fr);
-        gap: var(--ax-space-6);
-      }
-
-      /* Card components */
-      .presentation-card {
-        background: var(--ax-surface);
-        border: 1px solid var(--ax-border);
-        border-radius: var(--ax-radius-lg);
-        padding: var(--ax-space-6);
-        box-shadow: var(--ax-card-shadow);
-      }
-
-      .presentation-card h3 {
-        color: var(--ax-fg);
-        margin: 0 0 var(--ax-space-3);
-      }
-
-      .presentation-card p {
-        color: var(--ax-fg-muted);
-        margin: 0;
-        font-size: var(--ax-fs-body);
-      }
-
-      /* Bullet lists */
-      ul.bullets {
-        list-style: none;
-        padding: 0;
-        margin: 0;
-        display: flex;
-        flex-direction: column;
-        gap: var(--ax-space-4);
-      }
-
-      ul.bullets li {
-        font-family: var(--ax-font-body);
-        font-size: var(--ax-fs-body-lg);
-        color: var(--ax-fg-muted);
-        display: flex;
-        align-items: center;
-        gap: var(--ax-space-4);
-      }
-
-      ul.bullets li::before {
-        content: "";
-        display: inline-block;
-        width: 8px;
-        height: 8px;
-        border-radius: 50%;
-        background: var(--ax-cyan);
-        box-shadow: 0 0 6px var(--ax-cyan);
-      }
-
-      /* Controls */
+      .ax-deck-viewport { transform-origin: center center; box-shadow: 0 30px 90px rgba(0,0,0,0.85); }
       .controls {
-        position: absolute;
-        bottom: var(--ax-space-6);
-        right: var(--ax-space-6);
-        display: flex;
-        gap: var(--ax-space-2);
-        z-index: 100;
+        position: absolute; bottom: var(--ax-space-8); right: var(--ax-space-20);
+        display: flex; gap: var(--ax-space-3); z-index: 100;
       }
-
       .control-btn {
-        background: rgba(255, 255, 255, 0.05);
-        border: 1px solid var(--ax-border);
-        color: var(--ax-fg-1);
-        padding: var(--ax-space-2) var(--ax-space-4);
-        font-family: var(--ax-font-mono);
-        font-size: var(--ax-fs-body-sm);
-        border-radius: var(--ax-radius-sm);
-        cursor: pointer;
-        transition: all 0.2s ease;
+        background: var(--ax-surface); border: 1px solid var(--ax-border);
+        color: var(--ax-fg); padding: var(--ax-space-3) var(--ax-space-6);
+        font-family: var(--ax-font-mono); font-size: var(--ax-fs-body-sm);
+        border-radius: var(--ax-radius-md); cursor: pointer;
       }
-
-      .control-btn:hover {
-        background: var(--ax-brand-tint);
-        border-color: var(--ax-brand-soft);
-        color: #fff;
+      .control-btn:hover { background: var(--ax-brand-tint); border-color: var(--ax-brand-soft); }
+      .ax-slide-with-photo { position: relative; }
+      .ax-slide-with-photo .ax-photo-bg {
+        background-image: url('../../brand-system/assets/backgrounds/skyscraper.jpg');
       }
+      .ax-brand-header {
+        display: flex; flex-direction: column; align-items: flex-end; gap: 2px;
+      }
+      .ax-brand-header .ax-logo-group img { width: 32px; height: 32px; }
+      .ax-brand-header .ax-logo-group span { font-size: var(--ax-fs-h5); }
     </style>
   </head>
   <body>
-    <div class="deck-viewport" id="viewport">
-      
-      <!-- SLIDE 1: COVER -->
-      <div class="slide active slide-cover" id="slide-1">
-        <div class="radial-glow"></div>
-        <div class="content">
-          <div class="logo-group" style="justify-content: center; margin-bottom: var(--ax-space-6);">
-            <img src="../../brand-system/assets/agentyx-logo.png" alt="Logo" />
-            <span style="letter-spacing: var(--ax-tracking-wide)">Agentyx</span>
+    <div class="ax-presentation ax-deck-viewport" id="viewport">
+
+      <!-- SLIDE 1: Cover -->
+      <div class="ax-slide active ax-slide-cover" id="slide-1">
+        <div class="ax-radial-glow"></div>
+        <div class="ax-cover-content">
+          <div class="ax-logo-group" style="justify-content:center; margin-bottom:var(--ax-space-6); flex-direction:column;">
+            <img src="../../brand-system/assets/agentyx-logo.png" alt="Agentyx" width="80" height="80" />
+            <span>agentyx</span>
+            <div class="lev-lockup" style="margin-top:var(--ax-space-2);">
+              <span class="lev-by">by</span>
+              <img src="../../lev-brand-system/assets/lev-logotype-on-light.png" alt="Lev innovation" class="lev-logotype-img" />
+            </div>
           </div>
-          <div class="ax-eyebrow" style="color: var(--ax-cyan-soft); margin-bottom: var(--ax-space-4)">PRESENTACIÓN CORPORATIVA</div>
-          <h1 class="ax-display" style="margin-bottom: var(--ax-space-6)">
-            La Era de los <span style="color: var(--ax-brand-soft)">AI Employees</span>
+          <h1 class="ax-display" style="font-size:64px; max-width:1100px; margin:0 auto var(--ax-space-5);">
+            Turn repetitive operational work into<br />
+            <span class="ax-highlight">autonomous execution.</span>
           </h1>
-          <p class="ax-body-lg" style="max-width: 800px; margin: 0 auto; color: var(--ax-fg-muted)">
-            Automatización operativa autónoma y coordinada de extremo a extremo en sistemas empresariales.
+          <p class="ax-body-lg" style="max-width:700px; margin:0 auto;">
+            AI agents that execute real operational work inside your business.
           </p>
         </div>
-        <div class="slide-footer" style="position: absolute; bottom: var(--ax-space-16); left: var(--ax-space-20); right: var(--ax-space-20); border: none;">
-          <span>Lev Innovation · 2026</span>
-          <span>Slide 1 / 3</span>
+        <div class="ax-slide-footer" style="position:absolute; bottom:var(--ax-space-12); left:var(--ax-space-20); right:var(--ax-space-20); border:none;">
+          <span class="lev-lockup"><span class="lev-by">by</span> <img src="../../lev-brand-system/assets/lev-logotype-on-light.png" alt="Lev innovation" class="lev-logotype-img" /></span>
+          <span>Slide 1 / 10</span>
         </div>
       </div>
 
-      <!-- SLIDE 2: THE PROBLEM -->
-      <div class="slide" id="slide-2">
-        <div class="slide-header">
-          <div class="title-group">
-            <div class="ax-eyebrow" style="color: var(--ax-fg-subtle)">EL DESAFÍO OPERATIVO</div>
-            <h2 class="ax-h2">La Carpintería Operativa Corporativa</h2>
-          </div>
-          <div class="logo-group">
-            <img src="../../brand-system/assets/agentyx-logo.png" alt="Logo" />
-            <span>Agentyx</span>
-          </div>
-        </div>
-
-        <div class="slide-content grid-2">
-          <div>
-            <p class="ax-body-lg" style="margin-bottom: var(--ax-space-8)">
-              Los equipos de operaciones dedican hasta el 70% de su tiempo a tareas mecánicas de cruce de datos, validación manual y sincronización entre plataformas.
-            </p>
-            <ul class="bullets">
-              <li>Copiar datos entre ERPs y CRMs legados</li>
-              <li>Perseguir aprobaciones por correo y chats</li>
-              <li>Consultar inventarios y coordinar entregas manualmente</li>
+      <!-- SLIDE 2: Past vs Future split -->
+      <div class="ax-slide" id="slide-2" style="padding:0;">
+        <div class="ax-split-contrast" style="margin:0; width:100%; height:100%;">
+          <div class="ax-split-dark">
+            <div class="lev-eyebrow">THE PAST</div>
+            <img src="../../brand-system/assets/icons/process/ax-icon-ai-assistance.svg" alt="" class="ax-split-icon" style="filter:invert(1);" width="120" height="120" />
+            <h3 class="ax-h4">AI Assistance</h3>
+            <ul>
+              <li>Stops at conversation</li>
+              <li>Generates text and suggestions</li>
+              <li>Requires manual human prompting</li>
             </ul>
           </div>
-          <div class="grid-2">
-            <div class="presentation-card">
-              <div class="ax-eyebrow" style="color: var(--ax-cyan)">LENTITUD</div>
-              <h3 class="ax-h3" style="color: var(--ax-cyan); font-family: var(--ax-font-mono)">Horas</h3>
-              <p>Tiempo promedio para responder solicitudes rutinarias de leads o facturas.</p>
-            </div>
-            <div class="presentation-card">
-              <div class="ax-eyebrow" style="color: var(--ax-danger)">ERRORES</div>
-              <h3 class="ax-h3" style="color: var(--ax-danger); font-family: var(--ax-font-mono)">12%</h3>
-              <p>Tasa promedio de error humano en entradas repetitivas de datos.</p>
-            </div>
+          <div class="ax-split-light">
+            <div class="lev-eyebrow">THE FUTURE</div>
+            <img src="../../brand-system/assets/icons/process/ax-icon-ai-execution.svg" alt="" class="ax-split-icon" width="120" height="120" />
+            <h3 class="ax-h4">AI Execution (agentyx)</h3>
+            <ul>
+              <li>Receives operational context</li>
+              <li>Decides what needs to happen</li>
+              <li>Uses business tools to execute tasks</li>
+              <li>Completes the workflow</li>
+              <li>Returns the result</li>
+            </ul>
           </div>
         </div>
-
-        <div class="slide-footer">
-          <span>Agentyx · Operaciones Eficientes</span>
-          <span>Slide 2 / 3</span>
+        <div class="ax-footer-statement" style="position:absolute; bottom:0; margin:0; width:100%;">
+          Agentyx is built for execution, not interaction.
         </div>
       </div>
 
-      <!-- SLIDE 3: THE SOLUTION -->
-      <div class="slide" id="slide-3">
-        <div class="slide-header">
-          <div class="title-group">
-            <div class="ax-eyebrow" style="color: var(--ax-fg-subtle)">NUESTRA SOLUCIÓN</div>
-            <h2 class="ax-h2">Empleados de IA en Producción</h2>
-          </div>
-          <div class="logo-group">
-            <img src="../../brand-system/assets/agentyx-logo.png" alt="Logo" />
-            <span>Agentyx</span>
-          </div>
-        </div>
-
-        <div class="slide-content grid-3">
-          <div class="presentation-card">
-            <div class="ax-eyebrow" style="color: var(--ax-brand-soft)">CONECTADOS</div>
-            <h3 class="ax-h4">Integración Total</h3>
-            <p>Operan directamente en tus ERPs, CRMs, WhatsApp, bases de datos y emails sin requerir APIs propietarias complejas.</p>
-          </div>
-          <div class="presentation-card">
-            <div class="ax-eyebrow" style="color: var(--ax-cyan)">AUTÓNOMOS</div>
-            <h3 class="ax-h4">Operación 24/7</h3>
-            <p>Atienden y completan flujos operativos enteros de forma independiente sin ampliar headcount humano.</p>
-          </div>
-          <div class="presentation-card">
-            <div class="ax-eyebrow" style="color: var(--ax-success)">BAJO CONTROL</div>
-            <h3 class="ax-h4">Gobernanza Total</h3>
-            <p>Bitácoras detalladas paso a paso y escalamiento humano automático (Human-in-the-loop) cuando se requiere criterio crítico.</p>
+      <!-- SLIDE 3: Integration hub -->
+      <div class="ax-slide ax-slide-with-photo" id="slide-3">
+        <div class="ax-photo-bg ax-photo-bg-light"></div>
+        <div class="ax-slide-header" style="border:none;">
+          <h2 class="ax-h2" style="max-width:700px;">
+            Deploy digital <span class="ax-highlight">AI teams</span> inside your operation.
+          </h2>
+          <div class="ax-brand-header">
+            <div class="ax-logo-group"><img src="../../brand-system/assets/agentyx-logo.png" alt="" /><span>agentyx</span></div>
+            <div class="lev-lockup"><span class="lev-by">by</span> <img src="../../lev-brand-system/assets/lev-logotype-on-light.png" alt="Lev innovation" class="lev-logotype-img" /></div>
           </div>
         </div>
+        <div class="ax-slide-content ax-grid-2">
+          <div class="ax-card-dark">
+            <p class="ax-body-lg" style="color:#fff; margin-bottom:var(--ax-space-4);">Agentyx is not a chatbot, a copilot, or a workflow tool.</p>
+            <p class="ax-body">We deploy AI agents that perform real operational work.</p>
+            <ul class="ax-checklist" style="margin-top:var(--ax-space-4);">
+              <li>Acting like digital specialists assigned to business functions</li>
+              <li>Operating continuously, 24/7</li>
+              <li>Adapting to your real workflow (not forcing templates)</li>
+            </ul>
+          </div>
+          <div class="ax-integration-hub">
+            <div class="ax-integration-hub-circle">
+              <img src="../../brand-system/assets/icons/process/ax-icon-engine.svg" alt="" class="ax-engine-icon" />
+              <strong>agentyx engine</strong>
+              <span class="ax-meta">The Embedded Agent Model</span>
+            </div>
+            <div class="ax-integration-chip ax-integration-chip-top">
+              <svg class="ax-icon" aria-hidden="true"><use href="../../brand-system/icons.svg#ax-chat"/></svg>
+              <span>Team Chat App</span>
+            </div>
+            <div class="ax-integration-chip ax-integration-chip-right">
+              <svg class="ax-icon" aria-hidden="true"><use href="../../brand-system/icons.svg#ax-crm"/></svg>
+              <span>CRM</span>
+            </div>
+            <div class="ax-integration-chip ax-integration-chip-bottom">
+              <svg class="ax-icon" aria-hidden="true"><use href="../../brand-system/icons.svg#ax-email"/></svg>
+              <span>Email Client</span>
+            </div>
+            <div class="ax-integration-chip ax-integration-chip-left">
+              <svg class="ax-icon" aria-hidden="true"><use href="../../brand-system/icons.svg#ax-erp"/></svg>
+              <span>ERP</span>
+            </div>
+          </div>
+        </div>
+        <div class="ax-slide-footer"><span>Agentyx Pitch Deck</span><span>Slide 3 / 10</span></div>
+      </div>
 
-        <div class="slide-footer">
-          <span>Agentyx · La Plataforma</span>
-          <span>Slide 3 / 3</span>
+      <!-- SLIDE 4: 6-step process -->
+      <div class="ax-slide ax-slide-with-photo" id="slide-4">
+        <div class="ax-photo-bg ax-photo-bg-light"></div>
+        <div class="ax-slide-header" style="border:none;">
+          <h2 class="ax-h2">AI agents combined with workflows, business tools, and <span class="ax-highlight">human control.</span></h2>
+          <div class="ax-brand-header">
+            <div class="ax-logo-group"><img src="../../brand-system/assets/agentyx-logo.png" alt="" /><span>agentyx</span></div>
+          </div>
+        </div>
+        <div class="ax-slide-content">
+          <div class="ax-process-cubes">
+            <div class="ax-process-cube">
+              <div class="ax-process-cube-label"><strong>1. Trigger</strong><span>A process starts from a request, event, or handoff.</span></div>
+              <img src="../../brand-system/assets/icons/process/ax-icon-cube-iso.svg" alt="" class="ax-cube-icon" />
+            </div>
+            <div class="ax-process-cube">
+              <img src="../../brand-system/assets/icons/process/ax-icon-cube-iso.svg" alt="" class="ax-cube-icon" />
+              <div class="ax-process-cube-label"><strong>2. Context</strong><span>The agent gathers data, rules, and inputs.</span></div>
+            </div>
+            <div class="ax-process-cube">
+              <div class="ax-process-cube-label"><strong>3. Decision</strong><span>Determines the next action based on logic.</span></div>
+              <img src="../../brand-system/assets/icons/process/ax-icon-cube-iso.svg" alt="" class="ax-cube-icon" />
+            </div>
+            <div class="ax-process-cube">
+              <img src="../../brand-system/assets/icons/process/ax-icon-cube-iso.svg" alt="" class="ax-cube-icon" />
+              <div class="ax-process-cube-label"><strong>4. Execution</strong><span>Uses client tools to complete the task.</span></div>
+            </div>
+            <div class="ax-process-cube">
+              <div class="ax-process-cube-label"><strong>5. Supervision</strong><span>Humans review or intervene where required.</span></div>
+              <img src="../../brand-system/assets/icons/process/ax-icon-cube-iso.svg" alt="" class="ax-cube-icon" />
+            </div>
+            <div class="ax-process-cube">
+              <img src="../../brand-system/assets/icons/process/ax-icon-cube-iso.svg" alt="" class="ax-cube-icon" />
+              <div class="ax-process-cube-label"><strong>6. Outcome</strong><span>Work completed, logged, and reported.</span></div>
+            </div>
+          </div>
+        </div>
+        <div class="ax-footer-statement">This is agentic AI applied to real operations.</div>
+      </div>
+
+      <!-- SLIDE 5: Four quadrants -->
+      <div class="ax-slide ax-slide-with-photo" id="slide-5">
+        <div class="ax-photo-bg"></div>
+        <div class="ax-slide-header" style="border:none; color:#fff;">
+          <h2 class="ax-h2" style="color:#fff; max-width:500px;">Agentyx executes <span class="ax-highlight">real work</span> across the functions that run your business.</h2>
+          <div class="ax-brand-header"><div class="ax-logo-group"><img src="../../brand-system/assets/agentyx-logo.png" alt="" /><span style="color:#fff;">agentyx</span></div></div>
+        </div>
+        <div class="ax-slide-content ax-grid-2" style="grid-template-columns:1fr 1.5fr; align-items:center;">
+          <div></div>
+          <div class="ax-grid-2" style="gap:var(--ax-space-4);">
+            <div class="ax-card-light"><h4>Sales</h4><ul><li>Lead qualification</li><li>Follow-ups</li><li>Quote preparation</li><li>CRM updates</li></ul></div>
+            <div class="ax-card-light"><h4>Operations</h4><ul><li>Task routing</li><li>Status tracking</li><li>Exception management</li><li>Process execution</li></ul></div>
+            <div class="ax-card-light"><h4>Customer Support</h4><ul><li>Ticket response</li><li>Response workflows</li><li>Escalations</li><li>Customer updates</li></ul></div>
+            <div class="ax-card-light"><h4>Back Office</h4><ul><li>Data entry</li><li>Validation</li><li>Reporting</li><li>Administrative processing</li></ul></div>
+          </div>
+        </div>
+        <div class="ax-footer-statement" style="background:rgba(255,255,255,0.95); color:var(--ax-fg);">Wherever work is repetitive, rules-based, and tool-driven, Agentyx can execute it.</div>
+      </div>
+
+      <!-- SLIDE 6: Before / After -->
+      <div class="ax-slide ax-slide-with-photo" id="slide-6">
+        <div class="ax-photo-bg"></div>
+        <div class="ax-slide-header" style="border:none;">
+          <h2 class="ax-h2" style="color:#fff;">From manual bottlenecks to <span class="ax-highlight">continuous execution.</span></h2>
+        </div>
+        <div class="ax-slide-content ax-grid-2">
+          <div class="ax-card-light">
+            <h4>Before Agentyx</h4>
+            <ul class="ax-checklist ax-checklist-danger">
+              <li><svg class="ax-icon ax-icon-sm" style="color:var(--ax-danger)"><use href="../../brand-system/icons.svg#ax-x"/></svg> Manual follow-up</li>
+              <li><svg class="ax-icon ax-icon-sm" style="color:var(--ax-danger)"><use href="../../brand-system/icons.svg#ax-x"/></svg> Repeated steps</li>
+              <li><svg class="ax-icon ax-icon-sm" style="color:var(--ax-danger)"><use href="../../brand-system/icons.svg#ax-x"/></svg> Errors across handoffs</li>
+              <li><svg class="ax-icon ax-icon-sm" style="color:var(--ax-danger)"><use href="../../brand-system/icons.svg#ax-x"/></svg> Growth requires more headcount</li>
+            </ul>
+            <p class="ax-eyebrow" style="margin-top:var(--ax-space-4);">Manual Bottlenecks</p>
+          </div>
+          <div class="ax-card-light">
+            <h4>With Agentyx</h4>
+            <ul class="ax-checklist ax-checklist-success">
+              <li><svg class="ax-icon ax-icon-sm" style="color:var(--ax-success)"><use href="../../brand-system/icons.svg#ax-check"/></svg> Work executed automatically</li>
+              <li><svg class="ax-icon ax-icon-sm" style="color:var(--ax-success)"><use href="../../brand-system/icons.svg#ax-check"/></svg> Continuous operation</li>
+              <li><svg class="ax-icon ax-icon-sm" style="color:var(--ax-success)"><use href="../../brand-system/icons.svg#ax-check"/></svg> Fewer errors and rework</li>
+              <li><svg class="ax-icon ax-icon-sm" style="color:var(--ax-success)"><use href="../../brand-system/icons.svg#ax-check"/></svg> Scales without proportional headcount</li>
+            </ul>
+            <p class="ax-eyebrow" style="margin-top:var(--ax-space-4); color:var(--ax-brand-highlight);">Continuous Execution</p>
+          </div>
+        </div>
+        <div class="ax-footer-statement">Agentyx turns fragmented manual work into structured, scalable execution.</div>
+      </div>
+
+      <!-- SLIDE 7: Workflow transform -->
+      <div class="ax-slide" id="slide-7">
+        <div class="ax-slide-header">
+          <h2 class="ax-h2">Transform a repetitive business process into an <span class="ax-highlight">autonomous workflow.</span></h2>
+        </div>
+        <div class="ax-slide-content ax-grid-2">
+          <div class="ax-card-light">
+            <p class="ax-body-lg">The human team focuses on exceptions and high-value judgment. The agents handle repetitive execution.</p>
+            <div style="display:flex; gap:var(--ax-space-4); margin-top:var(--ax-space-6);">
+              <div style="text-align:center;"><svg class="ax-icon-lg"><use href="../../brand-system/icons.svg#ax-trigger"/></svg><p class="ax-meta"><strong>1. Trigger</strong><br/>Automatic signal</p></div>
+              <div style="text-align:center;"><svg class="ax-icon-lg"><use href="../../brand-system/icons.svg#ax-brain"/></svg><p class="ax-meta"><strong>2. Execution</strong><br/>AI agent handles steps</p></div>
+              <div style="text-align:center;"><svg class="ax-icon-lg"><use href="../../brand-system/icons.svg#ax-target"/></svg><p class="ax-meta"><strong>3. Outcome</strong><br/>Completed / logged</p></div>
+            </div>
+          </div>
+          <div class="ax-card-light">
+            <h4>The Results:</h4>
+            <ul class="ax-checklist ax-checklist-success">
+              <li><svg class="ax-icon ax-icon-sm" style="color:var(--ax-success)"><use href="../../brand-system/icons.svg#ax-check"/></svg> Faster turnaround</li>
+              <li><svg class="ax-icon ax-icon-sm" style="color:var(--ax-success)"><use href="../../brand-system/icons.svg#ax-check"/></svg> Less manual effort</li>
+              <li><svg class="ax-icon ax-icon-sm" style="color:var(--ax-success)"><use href="../../brand-system/icons.svg#ax-check"/></svg> Fewer repetitive errors</li>
+              <li><svg class="ax-icon ax-icon-sm" style="color:var(--ax-success)"><use href="../../brand-system/icons.svg#ax-check"/></svg> Better consistency</li>
+            </ul>
+          </div>
+        </div>
+        <div class="ax-slide-footer"><span>Agentyx Pitch Deck</span><span>Slide 7 / 10</span></div>
+      </div>
+
+      <!-- SLIDE 8: Operational value -->
+      <div class="ax-slide ax-slide-with-photo" id="slide-8">
+        <div class="ax-photo-bg"></div>
+        <div class="ax-slide-header" style="border:none;">
+          <h2 class="ax-h2" style="color:#fff;">The value is <span class="ax-highlight">operational.</span></h2>
+        </div>
+        <div class="ax-slide-content ax-grid-3">
+          <div class="ax-card-light"><h4>Fewer errors</h4><p class="ax-body-sm">Reduced rework across handoffs</p></div>
+          <div class="ax-card-light"><h4>Faster execution</h4><p class="ax-body-sm">Faster response times</p></div>
+          <div class="ax-card-light"><h4>More capacity</h4><p class="ax-body-sm">Increased output without scaling headcount</p></div>
+        </div>
+        <div class="ax-footer-statement">AI only matters when it improves the operation.</div>
+      </div>
+
+      <!-- SLIDE 9: Pilot staircase -->
+      <div class="ax-slide ax-slide-with-photo" id="slide-9">
+        <div class="ax-photo-bg"></div>
+        <div class="ax-slide-header" style="border:none;">
+          <h2 class="ax-h2" style="color:#fff;">Prove value fast with a controlled <span class="ax-highlight">operational pilot.</span></h2>
+        </div>
+        <div class="ax-slide-content">
+          <div class="ax-step-staircase">
+            <div class="ax-step-staircase-item"><strong>Step 1:</strong> Identify a high-friction process</div>
+            <div class="ax-step-staircase-item"><strong>Step 2:</strong> Map steps and exceptions</div>
+            <div class="ax-step-staircase-item"><strong>Step 3:</strong> Connect required tools</div>
+            <div class="ax-step-staircase-item"><strong>Step 4:</strong> Deploy in controlled scope</div>
+            <div class="ax-step-staircase-item"><strong>Step 5:</strong> Measure impact</div>
+          </div>
+        </div>
+        <div class="ax-slide-footer" style="color:#fff; border-color:rgba(255,255,255,0.2);"><span>We do not start with theory. We start with a process that matters.</span><span>Slide 9 / 10</span></div>
+      </div>
+
+      <!-- SLIDE 10: CTA -->
+      <div class="ax-slide ax-slide-cover" id="slide-10">
+        <div class="ax-radial-glow"></div>
+        <div class="ax-cover-content">
+          <div class="ax-logo-group" style="justify-content:center; margin-bottom:var(--ax-space-8);">
+            <img src="../../brand-system/assets/agentyx-logo.png" alt="" width="64" height="64" />
+            <span>agentyx</span>
+          </div>
+          <h2 class="ax-h1" style="margin-bottom:var(--ax-space-8);">Start with a diagnostic. Launch a real pilot.</h2>
+          <ul class="ax-checklist" style="text-align:left; max-width:600px; margin:0 auto var(--ax-space-10);">
+            <li><svg class="ax-icon ax-icon-sm" style="color:var(--ax-brand-highlight)"><use href="../../brand-system/icons.svg#ax-check"/></svg> Identify one critical process</li>
+            <li><svg class="ax-icon ax-icon-sm" style="color:var(--ax-brand-highlight)"><use href="../../brand-system/icons.svg#ax-check"/></svg> Define current friction</li>
+            <li><svg class="ax-icon ax-icon-sm" style="color:var(--ax-brand-highlight)"><use href="../../brand-system/icons.svg#ax-check"/></svg> Connect the right tools</li>
+            <li><svg class="ax-icon ax-icon-sm" style="color:var(--ax-brand-highlight)"><use href="../../brand-system/icons.svg#ax-check"/></svg> Launch a measurable pilot</li>
+          </ul>
+          <p class="ax-body-lg">Let's turn one broken workflow into a working proof of impact.</p>
+        </div>
+        <div class="ax-slide-footer" style="position:absolute; bottom:var(--ax-space-12); left:var(--ax-space-20); right:var(--ax-space-20); border:none;">
+          <span class="lev-lockup"><span class="lev-by">by</span> <img src="../../lev-brand-system/assets/lev-logotype-on-light.png" alt="Lev innovation" class="lev-logotype-img" /></span>
+          <span>Slide 10 / 10</span>
         </div>
       </div>
 
-      <!-- CONTROLS -->
       <div class="controls">
-        <button class="control-btn" id="prev-btn">ANTERIOR</button>
-        <button class="control-btn" id="next-btn">SIGUIENTE</button>
+        <button class="control-btn" id="prev-btn">PREV</button>
+        <button class="control-btn" id="next-btn">NEXT</button>
       </div>
     </div>
 
     <script>
-      // Slide manager
-      const slides = document.querySelectorAll(".slide");
+      const slides = document.querySelectorAll(".ax-slide");
       let currentSlide = 0;
-
       function showSlide(index) {
         slides[currentSlide].classList.remove("active");
         currentSlide = (index + slides.length) % slides.length;
         slides[currentSlide].classList.add("active");
       }
-
-      document.getElementById("prev-btn").addEventListener("click", () => {
-        showSlide(currentSlide - 1);
-      });
-
-      document.getElementById("next-btn").addEventListener("click", () => {
-        showSlide(currentSlide + 1);
-      });
-
-      // Keyboard support
+      document.getElementById("prev-btn").addEventListener("click", () => showSlide(currentSlide - 1));
+      document.getElementById("next-btn").addEventListener("click", () => showSlide(currentSlide + 1));
       window.addEventListener("keydown", (e) => {
-        if (e.key === "ArrowRight" || e.key === " ") {
-          showSlide(currentSlide + 1);
-        } else if (e.key === "ArrowLeft") {
-          showSlide(currentSlide - 1);
-        }
+        if (e.key === "ArrowRight" || e.key === " ") showSlide(currentSlide + 1);
+        else if (e.key === "ArrowLeft") showSlide(currentSlide - 1);
       });
-
-      // Scale slide viewport to fit screen
       const viewport = document.getElementById("viewport");
       function resizeViewport() {
-        const w = window.innerWidth;
-        const h = window.innerHeight;
-        const scale = Math.min(w / 1920, h / 1080);
+        const scale = Math.min(window.innerWidth / 1920, window.innerHeight / 1080);
         viewport.style.transform = `scale(${scale})`;
       }
-
       window.addEventListener("resize", resizeViewport);
       resizeViewport();
     </script>
