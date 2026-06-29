@@ -1,6 +1,6 @@
 # Workspace Customization Rules
 
-These rules apply specifically to development, styling, and asset management in the `agentyx-hyperframes-video` workspace.
+These rules apply specifically to development, styling, and asset management in the `lev-innovation-marketing-system` workspace.
 
 ## 1. Design System Alignment
 

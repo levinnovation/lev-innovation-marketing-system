@@ -17,7 +17,7 @@ Agentyx is a light, precise operating system for AI employees. The branding avoi
 
 ## 2. Design Tokens
 
-The source of truth for these tokens is [colors_and_type.css](file:///Users/jaya/projects/agentyx-hyperframes-video/brand-system/colors_and_type.css).
+The source of truth for these tokens is [colors_and_type.css](file:///Users/jaya/projects/lev-innovation-marketing-system/brand-system/colors_and_type.css).
 
 ### Colors (Dark Mode Default)
 *   **Primary Canvas (`--ax-bg`)**: `#070b13` (Deep blue-black)
