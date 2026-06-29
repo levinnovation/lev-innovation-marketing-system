@@ -1,0 +1,1012 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Presentación Agentyx — El Fogoncito</title>
+    <!-- Link to central design system -->
+    <link rel="stylesheet" href="../../brand-system/colors_and_type.css" />
+    <style>
+      :root {
+        --slide-width: 1920px;
+        --slide-height: 1080px;
+        background: #000;
+        overflow: hidden;
+      }
+
+      body {
+        margin: 0;
+        padding: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 100vw;
+        height: 100vh;
+        background: #000;
+      }
+
+      /* Slide container with scale translation to maintain 16:9 aspect ratio */
+      .deck-viewport {
+        position: relative;
+        width: var(--slide-width);
+        height: var(--slide-height);
+        background: var(--ax-bg);
+        overflow: hidden;
+        transform-origin: center center;
+        box-shadow: 0 30px 90px rgba(0,0,0,0.85);
+      }
+
+      .slide {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        padding: var(--ax-space-12) var(--ax-space-20);
+        display: none;
+        box-sizing: border-box;
+      }
+
+      .slide.active {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+      }
+
+      /* Slide layouts */
+      .slide-cover {
+        justify-content: center !important;
+        align-items: center;
+        text-align: center;
+        position: relative;
+      }
+
+      .slide-cover .radial-glow {
+        position: absolute;
+        inset: 0;
+        background: radial-gradient(circle at 50% 45%, rgba(37,99,235,0.22), transparent 50%);
+        pointer-events: none;
+        z-index: 0;
+      }
+
+      .slide-cover .content {
+        position: relative;
+        z-index: 1;
+        max-width: 1300px;
+      }
+
+      .slide-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        border-bottom: 1px solid var(--ax-divider);
+        padding-bottom: var(--ax-space-4);
+      }
+
+      .slide-header .title-group {
+        display: flex;
+        flex-direction: column;
+        gap: var(--ax-space-2);
+      }
+
+      .logo-group {
+        display: flex;
+        align-items: center;
+        gap: var(--ax-space-3);
+      }
+
+      .logo-group img {
+        width: 40px;
+        height: 40px;
+        object-fit: contain;
+      }
+
+      .logo-group span {
+        font-family: var(--ax-font-heading);
+        font-size: var(--ax-fs-h4);
+        font-weight: 700;
+        color: var(--ax-fg);
+      }
+
+      .slide-content {
+        flex-grow: 1;
+        margin-top: var(--ax-space-10);
+        min-height: 0;
+      }
+
+      .slide-footer {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        border-top: 1px solid var(--ax-divider);
+        padding-top: var(--ax-space-4);
+        font-family: var(--ax-font-mono);
+        font-size: var(--ax-fs-meta);
+        color: var(--ax-fg-subtle);
+      }
+
+      /* Grid helpers for content */
+      .grid-2 {
+        display: grid;
+        grid-template-columns: 1fr 1.2fr;
+        gap: var(--ax-space-12);
+        height: 100%;
+        align-items: start;
+      }
+
+      .grid-5-cols {
+        display: grid;
+        grid-template-columns: repeat(5, 1fr);
+        gap: var(--ax-space-4);
+      }
+
+      .grid-3-cols {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: var(--ax-space-6);
+      }
+
+      /* Premium Card components */
+      .presentation-card {
+        background: var(--ax-surface);
+        border: 1px solid var(--ax-border);
+        border-radius: var(--ax-radius-lg);
+        padding: var(--ax-space-6);
+        box-shadow: var(--ax-card-shadow);
+        transition: all var(--ax-dur-fast) var(--ax-ease-out);
+        display: flex;
+        flex-direction: column;
+        gap: var(--ax-space-2);
+      }
+
+      .presentation-card:hover {
+        transform: translateY(-4px);
+        border-color: var(--ax-border-strong);
+      }
+
+      .presentation-card h3 {
+        color: var(--ax-fg);
+        margin: 0;
+        font-size: var(--ax-fs-h5);
+      }
+
+      .presentation-card p {
+        color: var(--ax-fg-muted);
+        margin: 0;
+        font-size: var(--ax-fs-body-sm);
+        line-height: var(--ax-lh-normal);
+      }
+
+      /* Stat presentation side column */
+      .stat-sidebar {
+        display: flex;
+        flex-direction: column;
+        gap: var(--ax-space-6);
+      }
+
+      .stat-box-large {
+        background: rgba(17, 24, 39, 0.6);
+        border: 1px solid var(--ax-border);
+        border-radius: var(--ax-radius-xl);
+        padding: var(--ax-space-8);
+        text-align: left;
+        backdrop-filter: blur(10px);
+      }
+
+      .stat-box-large .number {
+        font-family: var(--ax-font-heading);
+        font-size: 96px;
+        font-weight: 800;
+        line-height: 1;
+        letter-spacing: var(--ax-tracking-tight);
+        color: var(--ax-cyan-soft);
+        margin-bottom: var(--ax-space-3);
+      }
+
+      .stat-box-large p {
+        font-family: var(--ax-font-body);
+        font-size: var(--ax-fs-body-lg);
+        color: var(--ax-fg-1);
+        margin: 0;
+        line-height: var(--ax-lh-normal);
+      }
+
+      .stat-box-large span {
+        font-family: var(--ax-font-body);
+        font-size: var(--ax-fs-meta);
+        color: var(--ax-fg-subtle);
+      }
+
+      /* Horizontal Row Info card */
+      .row-card {
+        display: flex;
+        align-items: center;
+        gap: var(--ax-space-5);
+        background: var(--ax-surface);
+        border: 1px solid var(--ax-border);
+        border-radius: var(--ax-radius-md);
+        padding: var(--ax-space-4) var(--ax-space-6);
+        margin-bottom: var(--ax-space-3);
+      }
+
+      .row-card .icon-wrapper {
+        width: 48px;
+        height: 48px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: var(--ax-radius-sm);
+        background: var(--ax-brand-tint);
+        color: var(--ax-brand-soft);
+        flex-shrink: 0;
+      }
+
+      .row-card-text h4 {
+        margin: 0;
+        font-size: var(--ax-fs-h6);
+        color: var(--ax-fg);
+      }
+
+      .row-card-text p {
+        margin: 4px 0 0;
+        font-size: var(--ax-fs-body-sm);
+        color: var(--ax-fg-muted);
+      }
+
+      /* Checklists */
+      ul.checklist {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        display: flex;
+        flex-direction: column;
+        gap: var(--ax-space-3);
+      }
+
+      ul.checklist li {
+        font-family: var(--ax-font-body);
+        font-size: var(--ax-fs-body);
+        color: var(--ax-fg-muted);
+        display: flex;
+        align-items: center;
+        gap: var(--ax-space-3);
+      }
+
+      ul.checklist li svg {
+        flex-shrink: 0;
+      }
+
+      /* Badges & Chips */
+      .badge-row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: var(--ax-space-3);
+      }
+
+      .pill-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: var(--ax-space-2);
+        padding: 8px var(--ax-space-4);
+        border-radius: var(--ax-radius-pill);
+        background: rgba(255, 255, 255, 0.04);
+        border: 1px solid var(--ax-border);
+        font-family: var(--ax-font-mono);
+        font-size: var(--ax-fs-meta);
+        color: var(--ax-fg-2);
+      }
+
+      .pill-badge svg {
+        color: var(--ax-cyan);
+      }
+
+      /* List box group (problems vs opportunities) */
+      .list-box-group {
+        display: flex;
+        flex-direction: column;
+        gap: var(--ax-space-6);
+      }
+
+      .list-box {
+        display: flex;
+        flex-direction: column;
+        gap: var(--ax-space-3);
+      }
+
+      .list-box-title {
+        display: flex;
+        align-items: center;
+        gap: var(--ax-space-2);
+        font-family: var(--ax-font-heading);
+        font-size: var(--ax-fs-h6);
+        font-weight: 700;
+        letter-spacing: var(--ax-tracking-tight);
+      }
+
+      /* Controls */
+      .controls {
+        position: absolute;
+        bottom: var(--ax-space-8);
+        right: var(--ax-space-20);
+        display: flex;
+        gap: var(--ax-space-3);
+        z-index: 100;
+      }
+
+      .control-btn {
+        background: rgba(255, 255, 255, 0.05);
+        border: 1px solid var(--ax-border);
+        color: var(--ax-fg-1);
+        padding: var(--ax-space-3) var(--ax-space-6);
+        font-family: var(--ax-font-mono);
+        font-size: var(--ax-fs-body-sm);
+        border-radius: var(--ax-radius-md);
+        cursor: pointer;
+        transition: all 0.2s ease;
+      }
+
+      .control-btn:hover {
+        background: var(--ax-brand-tint);
+        border-color: var(--ax-brand-soft);
+        color: #fff;
+      }
+
+      /* Cyan curves (background design) */
+      .cyan-curves-bg {
+        position: absolute;
+        inset: -12%;
+        opacity: 0.22;
+        pointer-events: none;
+        z-index: 1;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="deck-viewport" id="viewport">
+      <!-- Background curve SVG present on all content slides -->
+      <div class="cyan-curves-bg">
+        <svg viewBox="0 0 696 316" fill="none" preserveAspectRatio="xMidYMid slice" style="width: 100%; height: 100%; color: #67e8f9">
+          <g stroke="currentColor" stroke-width="0.7" fill="none" stroke-opacity="0.25">
+            <path d="M-300 -100C-300 -100 -200 200 150 300C500 400 600 800 600 800" stroke-dasharray="2 6" />
+            <path d="M-200 -140C-200 -140 -100 160 250 260C600 360 700 760 700 760" stroke-dasharray="2 6" />
+          </g>
+        </svg>
+      </div>
+
+      <!-- SLIDE 1: PORTADA -->
+      <div class="slide active slide-cover" id="slide-1">
+        <div class="radial-glow"></div>
+        <div class="content">
+          <div class="logo-group" style="justify-content: center; margin-bottom: var(--ax-space-6);">
+            <img src="../../brand-system/assets/agentyx-logo.png" alt="Logo" />
+            <span style="letter-spacing: var(--ax-tracking-wide)">Agentyx</span>
+          </div>
+          <div class="ax-eyebrow" style="color: var(--ax-cyan-soft); margin-bottom: var(--ax-space-4)">KICKOFF DEL PROYECTO</div>
+          <h1 class="ax-display" style="font-size: 80px; margin-bottom: var(--ax-space-5)">
+            Proyecto Agentyx<br />
+            <span style="color: var(--ax-brand-soft)">El Fogoncito</span>
+          </h1>
+          <p class="ax-body-lg" style="max-width: 800px; margin: 0 auto var(--ax-space-10) auto; color: var(--ax-fg-muted); font-size: 24px;">
+            Agentes de IA que multiplican la capacidad de tu equipo operativo.
+          </p>
+          <div class="badge-row" style="justify-content: center;">
+            <div class="pill-badge"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/></svg>Integración de Sistemas</div>
+            <div class="pill-badge"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="20" height="12" x="2" y="6" rx="2"/><path d="M12 12h.01"/><path d="M17 12h.01"/><path d="M7 12h.01"/></svg>Inventario Inteligente</div>
+            <div class="pill-badge"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 18H5a3 3 0 0 1-3-3V5a3 3 0 0 1 3-3h14a3 3 0 0 1 3 3v10a3 3 0 0 1-3 3h-5"/><path d="m10 18 4 4 4-4"/></svg>Servicio Express</div>
+            <div class="pill-badge"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 2.5z"/></svg>Mercadeo Inteligente</div>
+            <div class="pill-badge"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" x2="12" y1="1" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>Finanzas y Contabilidad</div>
+          </div>
+        </div>
+        <div class="slide-footer" style="position: absolute; bottom: var(--ax-space-12); left: var(--ax-space-20); right: var(--ax-space-20); border: none;">
+          <span>Lev Innovation · Kickoff</span>
+          <span>Slide 1 / 10</span>
+        </div>
+      </div>
+
+      <!-- SLIDE 2: ALCANCE INICIAL -->
+      <div class="slide" id="slide-2">
+        <div class="slide-header">
+          <div class="title-group">
+            <div class="ax-eyebrow" style="color: var(--ax-fg-subtle)">ALCANCE GENERAL</div>
+            <h2 class="ax-h2">Alcance inicial de la primera etapa</h2>
+          </div>
+          <div class="logo-group">
+            <img src="../../brand-system/assets/agentyx-logo.png" alt="Logo" />
+            <span>Agentyx</span>
+          </div>
+        </div>
+
+        <div class="slide-content grid-2">
+          <div class="stat-sidebar">
+            <p class="ax-body-lg" style="font-size: 24px; color: var(--ax-fg-1);">
+              Hemos definido 5 áreas de impacto estratégico prioritario donde implementaremos AI Employees para optimizar el rendimiento de la organización.
+            </p>
+            <div class="stat-box-large" style="margin-top: var(--ax-space-4)">
+              <div class="number" style="color: var(--ax-brand-soft)">5</div>
+              <p>Áreas de impacto simultáneo</p>
+              <span>Enfoque: Sistemas, Inventario, Delivery, Marketing y Finanzas</span>
+            </div>
+          </div>
+
+          <div style="display: flex; flex-direction: column; gap: var(--ax-space-3);">
+            <div class="row-card">
+              <div class="icon-wrapper"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/></svg></div>
+              <div class="row-card-text">
+                <h4>Integración de Sistemas</h4>
+                <p>Conexión entre Oracle y el software contable para eliminar reprocesos manuales.</p>
+              </div>
+            </div>
+            <div class="row-card">
+              <div class="icon-wrapper"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="12" x="2" y="6" rx="2"/><path d="M12 12h.01"/><path d="M17 12h.01"/><path d="M7 12h.01"/></svg></div>
+              <div class="row-card-text">
+                <h4>Inventario Inteligente</h4>
+                <p>Optimización de pedidos y control de stock basado en modelos predictivos de ventas.</p>
+              </div>
+            </div>
+            <div class="row-card">
+              <div class="icon-wrapper"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 18H5a3 3 0 0 1-3-3V5a3 3 0 0 1 3-3h14a3 3 0 0 1 3 3v10a3 3 0 0 1-3 3h-5"/><path d="m10 18 4 4 4-4"/></svg></div>
+              <div class="row-card-text">
+                <h4>Servicio Express (Delivery)</h4>
+                <p>Automatización de pedidos internos para recuperar márgenes del canal de delivery.</p>
+              </div>
+            </div>
+            <div class="row-card">
+              <div class="icon-wrapper"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 2.5z"/></svg></div>
+              <div class="row-card-text">
+                <h4>Mercadeo Inteligente</h4>
+                <p>Generación automática de contenido de alta calidad y medición analítica de ROI.</p>
+              </div>
+            </div>
+            <div class="row-card">
+              <div class="icon-wrapper"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" x2="12" y1="1" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg></div>
+              <div class="row-card-text">
+                <h4>Finanzas y Contabilidad</h4>
+                <p>Automatización contable completa, capa de BI y generación periódica de reportes financieros.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="slide-footer">
+          <span>Agentyx para El Fogoncito</span>
+          <span>Slide 2 / 10</span>
+        </div>
+      </div>
+
+      <!-- SLIDE 3: ¿QUÉ ES UN AI AGENT? -->
+      <div class="slide" id="slide-3">
+        <div class="slide-header">
+          <div class="title-group">
+            <div class="ax-eyebrow" style="color: var(--ax-fg-subtle)">CONCEPTO CLAVE</div>
+            <h2 class="ax-h2">¿Qué es un AI Agent?</h2>
+          </div>
+          <div class="logo-group">
+            <img src="../../brand-system/assets/agentyx-logo.png" alt="Logo" />
+            <span>Agentyx</span>
+          </div>
+        </div>
+
+        <div class="slide-content grid-2">
+          <div class="stat-sidebar">
+            <p class="ax-body-lg" style="font-size: 26px; color: var(--ax-fg-1); line-height: 1.5">
+              Un agente de IA funciona como un <strong>empleado virtual</strong>. Cuenta con capacidades cognitivas estructuradas para interactuar con sistemas de la misma manera que lo haría una persona.
+            </p>
+            <div class="presentation-card" style="background: var(--ax-brand-tint); border-color: rgba(96,165,250,0.30); margin-top: var(--ax-space-4)">
+              <h3 style="color: var(--ax-cyan-soft)">El Gran Valor</h3>
+              <p style="color: var(--ax-fg-1); font-size: 16px;">
+                Integrar AI Agents dentro de la operativa diaria de El Fogoncito para potenciar resultados, asegurar consistencia y multiplicar la productividad del equipo humano.
+              </p>
+            </div>
+          </div>
+
+          <div style="display: flex; flex-direction: column; gap: var(--ax-space-4)">
+            <div class="row-card">
+              <div class="icon-wrapper" style="color: var(--ax-cyan)"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2a10 10 0 0 1 7.54 16.59c-.24.32-.34.73-.26 1.12l.53 2.5a.5.5 0 0 1-.72.54l-2.28-1.15a1.002 1.002 0 0 0-.9-.05A10 10 0 1 1 12 2Z"/></svg></div>
+              <div class="row-card-text">
+                <h4 style="font-size: 18px;">Cerebro: Modelo LLM</h4>
+                <p style="font-size: 15px;">El modelo de lenguaje avanzado que piensa, razona, interpreta intenciones y toma decisiones estructuradas en segundos.</p>
+              </div>
+            </div>
+            <div class="row-card">
+              <div class="icon-wrapper" style="color: var(--ax-cyan)"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"/><line x1="4" x2="4" y1="22" y2="15"/></svg></div>
+              <div class="row-card-text">
+                <h4 style="font-size: 18px;">Objetivo Claramente Definido</h4>
+                <p style="font-size: 15px;">La meta específica e inquebrantable que el agente debe alcanzar, configurada de acuerdo a las reglas de negocio del equipo.</p>
+              </div>
+            </div>
+            <div class="row-card">
+              <div class="icon-wrapper" style="color: var(--ax-cyan)"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg></div>
+              <div class="row-card-text">
+                <h4 style="font-size: 18px;">Herramientas Integradas</h4>
+                <p style="font-size: 15px;">Acceso seguro a sistemas internos, bases de datos corporativas, softwares de terceros y APIs para ejecutar acciones.</p>
+              </div>
+            </div>
+            <div class="row-card">
+              <div class="icon-wrapper" style="color: var(--ax-cyan)"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="20" height="14" x="2" y="3" rx="2"/><line x1="8" x2="16" y1="21" y2="21"/><line x1="12" x2="12" y1="17" y2="21"/></svg></div>
+              <div class="row-card-text">
+                <h4 style="font-size: 18px;">Computadora Virtual (Sandbox)</h4>
+                <p style="font-size: 15px;">El entorno seguro donde el agente interactúa con interfaces y flujos de pantalla igual que lo haría un operador humano.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="slide-footer">
+          <span>Agentyx para El Fogoncito</span>
+          <span>Slide 3 / 10</span>
+        </div>
+      </div>
+
+      <!-- SLIDE 4: AREA 1 - INTEGRACION DE SISTEMAS -->
+      <div class="slide" id="slide-4">
+        <div class="slide-header">
+          <div class="title-group">
+            <div class="ax-eyebrow" style="color: var(--ax-fg-subtle)">ÁREA DE ENFOQUE 1</div>
+            <h2 class="ax-h2">Integración de Sistemas Oracle y Contabilidad</h2>
+          </div>
+          <div class="logo-group">
+            <img src="../../brand-system/assets/agentyx-logo.png" alt="Logo" />
+            <span>Agentyx</span>
+          </div>
+        </div>
+
+        <div class="slide-content grid-2">
+          <div class="stat-sidebar">
+            <div class="stat-box-large">
+              <div class="number">-70%</div>
+              <p>Reducción en tiempo de procesamiento</p>
+              <span>Integración automatizada y sincronizada de sistemas. Fuente: McKinsey Digital</span>
+            </div>
+            <p class="ax-body" style="font-size: 16px; margin-top: 10px;">
+              Los AI Agents conectan bases de datos aisladas e interactúan con Oracle de forma nativa para resolver tareas repetitivas de forma inmediata.
+            </p>
+          </div>
+
+          <div class="list-box-group">
+            <div class="list-box">
+              <div class="list-box-title" style="color: var(--ax-danger)">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"/><line x1="12" x2="12" y1="9" y2="13"/><line x1="12" x2="12" y1="17" y2="17"/></svg>
+                Problemas Detectados
+              </div>
+              <ul class="checklist">
+                <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--ax-danger)" stroke-width="2.5"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg> <strong>Sistemas desconectados:</strong> Oracle y el sistema contable operan de forma aislada.</li>
+                <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--ax-danger)" stroke-width="2.5"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg> <strong>Doble digitación:</strong> Los operadores deben transcribir la misma información en ambos sistemas.</li>
+                <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--ax-danger)" stroke-width="2.5"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg> <strong>Riesgo de inconsistencia:</strong> Pérdida de datos que dificulta la toma oportuna de decisiones.</li>
+              </ul>
+            </div>
+
+            <div class="list-box">
+              <div class="list-box-title" style="color: var(--ax-cyan-soft)">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.2 1.5-3.5A6 6 0 0 0 6 8c0 1 .2 2.2 1.5 3.5.7.7 1.3 1.5 1.5 2.5"/><path d="M9 18h6"/><path d="M10 22h4"/></svg>
+                Oportunidades Iniciales
+              </div>
+              <ul class="checklist">
+                <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--ax-success)" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg> <strong>Conexión automática:</strong> Sincronización continua de datos entre Oracle y el software contable.</li>
+                <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--ax-success)" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg> <strong>Data limpia y accesible:</strong> Consolidación de información confiable en un solo lugar.</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <div class="slide-footer">
+          <span>Agentyx para El Fogoncito</span>
+          <span>Slide 4 / 10</span>
+        </div>
+      </div>
+
+      <!-- SLIDE 5: AREA 2 - INVENTARIO INTELIGENTE -->
+      <div class="slide" id="slide-5">
+        <div class="slide-header">
+          <div class="title-group">
+            <div class="ax-eyebrow" style="color: var(--ax-fg-subtle)">ÁREA DE ENFOQUE 2</div>
+            <h2 class="ax-h2">Inventario Inteligente y Control de Stock</h2>
+          </div>
+          <div class="logo-group">
+            <img src="../../brand-system/assets/agentyx-logo.png" alt="Logo" />
+            <span>Agentyx</span>
+          </div>
+        </div>
+
+        <div class="slide-content grid-2">
+          <div class="stat-sidebar">
+            <div class="stat-box-large">
+              <div class="number">27%</div>
+              <p>Tope de inventario excedente eliminado</p>
+              <span>Optimización de órdenes de compra para mantener márgenes saludables. Fuente: Datos históricos El Fogoncito</span>
+            </div>
+            <p class="ax-body" style="font-size: 16px; margin-top: 10px;">
+              Los AI Agents analizan históricos de ventas y vigencia de productos para sugerir y emitir órdenes de recompra óptimas.
+            </p>
+          </div>
+
+          <div class="list-box-group">
+            <div class="list-box">
+              <div class="list-box-title" style="color: var(--ax-danger)">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"/><line x1="12" x2="12" y1="9" y2="13"/><line x1="12" x2="12" y1="17" y2="17"/></svg>
+                Problemas Detectados
+              </div>
+              <ul class="checklist">
+                <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--ax-danger)" stroke-width="2.5"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg> <strong>Pedidos excesivos:</strong> Se compra inventario excedente sin considerar históricos reales.</li>
+                <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--ax-danger)" stroke-width="2.5"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg> <strong>Falta de optimización:</strong> El volumen no se ajusta de acuerdo a la demanda del día anterior.</li>
+                <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--ax-danger)" stroke-width="2.5"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg> <strong>Brecha administrativa:</strong> Los errores se detectan tarde, después de emitido el pedido.</li>
+              </ul>
+            </div>
+
+            <div class="list-box">
+              <div class="list-box-title" style="color: var(--ax-cyan-soft)">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.2 1.5-3.5A6 6 0 0 0 6 8c0 1 .2 2.2 1.5 3.5.7.7 1.3 1.5 1.5 2.5"/><path d="M9 18h6"/><path d="M10 22h4"/></svg>
+                Oportunidades Iniciales
+              </div>
+              <ul class="checklist">
+                <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--ax-success)" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg> <strong>Recomendaciones automatizadas:</strong> IA que sugiere montos basándose en históricos y vigencia.</li>
+                <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--ax-success)" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg> <strong>Órdenes de recompra eficientes:</strong> Automatización y validación de pedidos en tiempo real.</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <div class="slide-footer">
+          <span>Agentyx para El Fogoncito</span>
+          <span>Slide 5 / 10</span>
+        </div>
+      </div>
+
+      <!-- SLIDE 6: AREA 3 - SERVICIO EXPRESS -->
+      <div class="slide" id="slide-6">
+        <div class="slide-header">
+          <div class="title-group">
+            <div class="ax-eyebrow" style="color: var(--ax-fg-subtle)">ÁREA DE ENFOQUE 3</div>
+            <h2 class="ax-h2">Servicio Express y Autonomía de Delivery</h2>
+          </div>
+          <div class="logo-group">
+            <img src="../../brand-system/assets/agentyx-logo.png" alt="Logo" />
+            <span>Agentyx</span>
+          </div>
+        </div>
+
+        <div class="slide-content grid-2">
+          <div class="stat-sidebar">
+            <div class="stat-box-large">
+              <div class="number">22%</div>
+              <p>De margen recuperado frente a terceros</p>
+              <span>Reducción de dependencia de plataformas de delivery externas. Fuente: Datos internos El Fogoncito</span>
+            </div>
+            <p class="ax-body" style="font-size: 16px; margin-top: 10px;">
+              AI Agents de voz y chat atienden llamadas y procesan pedidos automáticamente en el sistema de delivery propio.
+            </p>
+          </div>
+
+          <div class="list-box-group">
+            <div class="list-box">
+              <div class="list-box-title" style="color: var(--ax-danger)">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"/><line x1="12" x2="12" y1="9" y2="13"/><line x1="12" x2="12" y1="17" y2="17"/></svg>
+                Problemas Detectados
+              </div>
+              <ul class="checklist">
+                <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--ax-danger)" stroke-width="2.5"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg> <strong>Dominio de apps de terceros:</strong> Más de 80 pedidos al día van a plataformas de terceros, perdiendo 22% de margen.</li>
+                <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--ax-danger)" stroke-width="2.5"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg> <strong>Proceso manual de cajeros:</strong> El personal atiende el express de forma manual, generando demoras en salón.</li>
+                <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--ax-danger)" stroke-width="2.5"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg> <strong>Servicio lento:</strong> Gestión ineficiente de pedidos y coordinación de despachos.</li>
+              </ul>
+            </div>
+
+            <div class="list-box">
+              <div class="list-box-title" style="color: var(--ax-cyan-soft)">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.2 1.5-3.5A6 6 0 0 0 6 8c0 1 .2 2.2 1.5 3.5.7.7 1.3 1.5 1.5 2.5"/><path d="M9 18h6"/><path d="M10 22h4"/></svg>
+                Oportunidades Iniciales
+              </div>
+              <ul class="checklist">
+                <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--ax-success)" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg> <strong>AI Agents de recepción de llamadas:</strong> Agentes de voz que contestan y registran pedidos automáticamente.</li>
+                <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--ax-success)" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg> <strong>Recuperar el canal propio:</strong> Reconquistar volumen de pedidos directos con un servicio express optimizado.</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <div class="slide-footer">
+          <span>Agentyx para El Fogoncito</span>
+          <span>Slide 6 / 10</span>
+        </div>
+      </div>
+
+      <!-- SLIDE 7: AREA 4 - MERCADEO INTELIGENTE -->
+      <div class="slide" id="slide-7">
+        <div class="slide-header">
+          <div class="title-group">
+            <div class="ax-eyebrow" style="color: var(--ax-fg-subtle)">ÁREA DE ENFOQUE 4</div>
+            <h2 class="ax-h2">Mercadeo Inteligente y Gestión de Impacto</h2>
+          </div>
+          <div class="logo-group">
+            <img src="../../brand-system/assets/agentyx-logo.png" alt="Logo" />
+            <span>Agentyx</span>
+          </div>
+        </div>
+
+        <div class="slide-content grid-2">
+          <div class="stat-sidebar">
+            <div class="stat-box-large">
+              <div class="number">85%</div>
+              <p>De las empresas no miden el ROI en redes</p>
+              <span>Medición y atribución de ventas automatizada para optimizar campañas. Fuente: HubSpot State of Marketing</span>
+            </div>
+            <div class="presentation-card" style="background: var(--ax-brand-tint); border-color: rgba(96,165,250,0.30); margin-top: var(--ax-space-2)">
+              <h4 style="color: var(--ax-cyan-soft); font-family: var(--ax-font-heading); margin: 0 0 8px 0; font-size: 16px;">Tótem Electrónico: Control Inteligente</h4>
+              <p style="color: var(--ax-fg-1); font-size: 14px;">
+                Un agente de IA exclusivo manejará y actualizará el contenido del tótem exterior del restaurante, adaptando dinámicamente promociones e imágenes de alta calidad según el flujo de la calle.
+              </p>
+            </div>
+          </div>
+
+          <div class="list-box-group">
+            <div class="list-box">
+              <div class="list-box-title" style="color: var(--ax-danger)">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"/><line x1="12" x2="12" y1="9" y2="13"/><line x1="12" x2="12" y1="17" y2="17"/></svg>
+                Problemas Detectados
+              </div>
+              <ul class="checklist">
+                <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--ax-danger)" stroke-width="2.5"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg> <strong>Falta de atribución:</strong> Las inversiones publicitarias no están ligadas a ventas reales en el local.</li>
+                <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--ax-danger)" stroke-width="2.5"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg> <strong>Costos fotográficos elevados:</strong> Alta dependencia de agencias externas para fotos y banners.</li>
+              </ul>
+            </div>
+
+            <div class="list-box">
+              <div class="list-box-title" style="color: var(--ax-cyan-soft)">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.2 1.5-3.5A6 6 0 0 0 6 8c0 1 .2 2.2 1.5 3.5.7.7 1.3 1.5 1.5 2.5"/><path d="M9 18h6"/><path d="M10 22h4"/></svg>
+                Oportunidades Iniciales
+              </div>
+              <ul class="checklist">
+                <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--ax-success)" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg> <strong>Fotos de producto con IA:</strong> Generación instantánea de fotos de estudio y banners atractivos.</li>
+                <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--ax-success)" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg> <strong>Agentes de mercadeo:</strong> Automatización de posts, monitoreo y analítica directa del ROI.</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <div class="slide-footer">
+          <span>Agentyx para El Fogoncito</span>
+          <span>Slide 7 / 10</span>
+        </div>
+      </div>
+
+      <!-- SLIDE 8: AREA 5 - FINANZAS Y CONTABILIDAD -->
+      <div class="slide" id="slide-8">
+        <div class="slide-header">
+          <div class="title-group">
+            <div class="ax-eyebrow" style="color: var(--ax-fg-subtle)">ÁREA DE ENFOQUE 5</div>
+            <h2 class="ax-h2">Finanzas, Contabilidad y Automatización Contable</h2>
+          </div>
+          <div class="logo-group">
+            <img src="../../brand-system/assets/agentyx-logo.png" alt="Logo" />
+            <span>Agentyx</span>
+          </div>
+        </div>
+
+        <div class="slide-content grid-2">
+          <div class="stat-sidebar">
+            <div class="stat-box-large">
+              <div class="number">65%</div>
+              <p>Reducción de errores administrativos</p>
+              <span>Cruce predictivo y auditoría automatizada entre sistemas financieros. Fuente: McKinsey Global Institute</span>
+            </div>
+            <p class="ax-body" style="font-size: 16px; margin-top: 10px;">
+              Los AI Agents automatizan el flujo de validaciones y conciliación de facturas, eliminando vacíos de información en la contabilidad.
+            </p>
+          </div>
+
+          <div class="list-box-group">
+            <div class="list-box">
+              <div class="list-box-title" style="color: var(--ax-danger)">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"/><line x1="12" x2="12" y1="9" y2="13"/><line x1="12" x2="12" y1="17" y2="17"/></svg>
+                Problemas Detectados
+              </div>
+              <ul class="checklist">
+                <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--ax-danger)" stroke-width="2.5"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg> <strong>Doble digitación:</strong> Captura y carga duplicada de facturas en contabilidad y en Oracle.</li>
+                <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--ax-danger)" stroke-width="2.5"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg> <strong>Data desestructurada:</strong> Reportes contables con formatos inconsistentes y difíciles de analizar.</li>
+                <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--ax-danger)" stroke-width="2.5"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg> <strong>Vacíos de información:</strong> Inconsistencias temporales entre el cierre de caja y el sistema central.</li>
+              </ul>
+            </div>
+
+            <div class="list-box">
+              <div class="list-box-title" style="color: var(--ax-cyan-soft)">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.2 1.5-3.5A6 6 0 0 0 6 8c0 1 .2 2.2 1.5 3.5.7.7 1.3 1.5 1.5 2.5"/><path d="M9 18h6"/><path d="M10 22h4"/></svg>
+                Oportunidades Iniciales
+              </div>
+              <ul class="checklist">
+                <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--ax-success)" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg> <strong>Business Intelligence con IA:</strong> Reportes consolidados y respuestas a preguntas de negocio en tiempo real.</li>
+                <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--ax-success)" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg> <strong>Sincronización automatizada:</strong> Agentes que cargan de forma segura facturas y concilian saldos automáticamente.</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <div class="slide-footer">
+          <span>Agentyx para El Fogoncito</span>
+          <span>Slide 8 / 10</span>
+        </div>
+      </div>
+
+      <!-- SLIDE 9: ESTRUCTURA DEL PROYECTO (3 ETAPAS) -->
+      <div class="slide" id="slide-9">
+        <div class="slide-header">
+          <div class="title-group">
+            <div class="ax-eyebrow" style="color: var(--ax-fg-subtle)">PLAN DE IMPLEMENTACIÓN</div>
+            <h2 class="ax-h2">Tres etapas estructuradas del proyecto</h2>
+          </div>
+          <div class="logo-group">
+            <img src="../../brand-system/assets/agentyx-logo.png" alt="Logo" />
+            <span>Agentyx</span>
+          </div>
+        </div>
+
+        <div class="slide-content grid-3-cols" style="align-items: start; margin-top: var(--ax-space-12);">
+          
+          <div class="presentation-card">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: var(--ax-space-3);">
+              <span class="ax-eyebrow" style="color: var(--ax-brand-soft); font-size: 14px;">Etapa 01</span>
+              <div class="pill-badge" style="padding: 4px 10px; font-size: 10px; background: rgba(37,99,235,0.08)">AUDITORÍA</div>
+            </div>
+            <h3 class="ax-h4">Discovery & Diagnóstico</h3>
+            <p style="margin-bottom: var(--ax-space-4)">Auditoría operacional profunda para entender los procesos "As-Is" e identificar cuellos de botella óptimos para automatizar.</p>
+            <ul class="checklist" style="font-size: 13px;">
+              <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--ax-success)" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg> Entrevistas con líderes de área</li>
+              <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--ax-success)" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg> Mapeo de flujos y procesos</li>
+              <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--ax-success)" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg> Auditoría técnica de Oracle y contable</li>
+              <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--ax-success)" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg> Hoja de ruta estratégica de IA</li>
+            </ul>
+          </div>
+
+          <div class="presentation-card" style="border-color: rgba(37,99,235,0.40); box-shadow: 0 10px 40px rgba(37,99,235,0.12)">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: var(--ax-space-3);">
+              <span class="ax-eyebrow" style="color: var(--ax-cyan-soft); font-size: 14px;">Etapa 02</span>
+              <div class="pill-badge" style="padding: 4px 10px; font-size: 10px; background: rgba(34,211,238,0.08); color: var(--ax-cyan)">DESARROLLO</div>
+            </div>
+            <h3 class="ax-h4">Implementación Agentyx</h3>
+            <p style="margin-bottom: var(--ax-space-4)">Diseño, desarrollo y despliegue a medida de los AI Employees integrados en la infraestructura técnica de El Fogoncito.</p>
+            <ul class="checklist" style="font-size: 13px;">
+              <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--ax-success)" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg> Creación de agentes personalizados</li>
+              <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--ax-success)" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg> Integración Oracle-Contabilidad</li>
+              <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--ax-success)" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg> Automatización de express y marketing</li>
+              <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--ax-success)" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg> Pruebas QA integrales y validación</li>
+            </ul>
+          </div>
+
+          <div class="presentation-card">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: var(--ax-space-3);">
+              <span class="ax-eyebrow" style="color: var(--ax-fg-subtle); font-size: 14px;">Etapa 03</span>
+              <div class="pill-badge" style="padding: 4px 10px; font-size: 10px; background: rgba(255,255,255,0.05)">SOPORTE</div>
+            </div>
+            <h3 class="ax-h4">Soporte & Mejora Continua</h3>
+            <p style="margin-bottom: var(--ax-space-4)">Monitoreo continuo de la performance de los agentes en producción, actualizaciones iterativas y soporte técnico proactivo.</p>
+            <ul class="checklist" style="font-size: 13px;">
+              <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--ax-success)" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg> Hosting y gestión de infraestructura</li>
+              <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--ax-success)" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg> Monitoreo y reportería de performance</li>
+              <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--ax-success)" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg> Ajustes proactivos de los LLMs</li>
+              <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--ax-success)" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg> Soporte técnico e incidencias prioritario</li>
+            </ul>
+          </div>
+
+        </div>
+
+        <div class="slide-footer">
+          <span>Agentyx para El Fogoncito</span>
+          <span>Slide 9 / 10</span>
+        </div>
+      </div>
+
+      <!-- SLIDE 10: RESULTADO FINAL & SIGUIENTES PASOS -->
+      <div class="slide" id="slide-10">
+        <div class="slide-header">
+          <div class="title-group">
+            <div class="ax-eyebrow" style="color: var(--ax-fg-subtle)">CONCLUSIÓN Y PASOS A SEGUIR</div>
+            <h2 class="ax-h2">El resultado final y próximos pasos</h2>
+          </div>
+          <div class="logo-group">
+            <img src="../../brand-system/assets/agentyx-logo.png" alt="Logo" />
+            <span>Agentyx</span>
+          </div>
+        </div>
+
+        <div class="slide-content grid-2" style="margin-top: var(--ax-space-8)">
+          <div class="stat-sidebar">
+            <div class="stat-box-large" style="background: radial-gradient(circle at 50% 0%, rgba(37,99,235,0.22), transparent 75%), #111827; border-color: rgba(96,165,250,0.30)">
+              <div class="number" style="color: var(--ax-cyan)">3x</div>
+              <p style="font-size: 26px; font-weight: 700; margin-bottom: 8px;">Aumento de Productividad</p>
+              <span>En la ejecución de procesos operativos integrando AI Agents de Agentyx. Fuente: McKinsey Global Institute</span>
+            </div>
+            <p class="ax-body" style="font-size: 16px;">
+              Liberamos a tu equipo humano de la carga repetitiva para que se enfoquen en la estrategia, crecimiento y experiencia del cliente.
+            </p>
+          </div>
+
+          <div class="list-box">
+            <div class="list-box-title" style="color: var(--ax-fg); margin-bottom: var(--ax-space-3);">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--ax-brand-soft)" stroke-width="2.5"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+              Próximos Pasos de Ejecución
+            </div>
+            
+            <div style="display: flex; flex-direction: column; gap: var(--ax-space-3);">
+              <div class="row-card" style="padding: var(--ax-space-3) var(--ax-space-5)">
+                <div class="icon-wrapper" style="width: 36px; height: 36px; font-family: var(--ax-font-mono); font-size: 16px; font-weight: bold; background: rgba(37,99,235,0.15)">1</div>
+                <div class="row-card-text">
+                  <h4 style="font-size: 16px;">Revisar y aprobar propuesta</h4>
+                  <p style="font-size: 13px; margin-top: 2px;">Confirmación formal y alineación del equipo directivo.</p>
+                </div>
+              </div>
+              <div class="row-card" style="padding: var(--ax-space-3) var(--ax-space-5)">
+                <div class="icon-wrapper" style="width: 36px; height: 36px; font-family: var(--ax-font-mono); font-size: 16px; font-weight: bold; background: rgba(37,99,235,0.15)">2</div>
+                <div class="row-card-text">
+                  <h4 style="font-size: 16px;">Ejecutar NDA y Contrato</h4>
+                  <p style="font-size: 13px; margin-top: 2px;">Acuerdo de confidencialidad de datos y contrato marco de servicios.</p>
+                </div>
+              </div>
+              <div class="row-card" style="padding: var(--ax-space-3) var(--ax-space-5)">
+                <div class="icon-wrapper" style="width: 36px; height: 36px; font-family: var(--ax-font-mono); font-size: 16px; font-weight: bold; background: rgba(37,99,235,0.15)">3</div>
+                <div class="row-card-text">
+                  <h4 style="font-size: 16px;">Agendar llamada de Kickoff</h4>
+                  <p style="font-size: 13px; margin-top: 2px;">Definición de fechas de visita presencial en el local principal.</p>
+                </div>
+              </div>
+              <div class="row-card" style="padding: var(--ax-space-3) var(--ax-space-5)">
+                <div class="icon-wrapper" style="width: 36px; height: 36px; font-family: var(--ax-font-mono); font-size: 16px; font-weight: bold; background: rgba(37,99,235,0.15)">4</div>
+                <div class="row-card-text">
+                  <h4 style="font-size: 16px;">Iniciar Fase 1 (Discovery)</h4>
+                  <p style="font-size: 13px; margin-top: 2px;">Lanzamiento oficial de la auditoría operacional y mapeo.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="slide-footer">
+          <span>Agentyx para El Fogoncito</span>
+          <span>Slide 10 / 10</span>
+        </div>
+      </div>
+
+      <!-- CONTROLS -->
+      <div class="controls">
+        <button class="control-btn" id="prev-btn">ANTERIOR</button>
+        <button class="control-btn" id="next-btn">SIGUIENTE</button>
+      </div>
+    </div>
+
+    <script>
+      // Slide manager
+      const slides = document.querySelectorAll(".slide");
+      let currentSlide = 0;
+
+      function showSlide(index) {
+        slides[currentSlide].classList.remove("active");
+        currentSlide = (index + slides.length) % slides.length;
+        slides[currentSlide].classList.add("active");
+      }
+
+      document.getElementById("prev-btn").addEventListener("click", () => {
+        showSlide(currentSlide - 1);
+      });
+
+      document.getElementById("next-btn").addEventListener("click", () => {
+        showSlide(currentSlide + 1);
+      });
+
+      // Keyboard support
+      window.addEventListener("keydown", (e) => {
+        if (e.key === "ArrowRight" || e.key === " ") {
+          showSlide(currentSlide + 1);
+        } else if (e.key === "ArrowLeft") {
+          showSlide(currentSlide - 1);
+        }
+      });
+
+      // Scale slide viewport to fit screen
+      const viewport = document.getElementById("viewport");
+      function resizeViewport() {
+        const w = window.innerWidth;
+        const h = window.innerHeight;
+        const scale = Math.min(w / 1920, h / 1080);
+        viewport.style.transform = `scale(${scale})`;
+      }
+
+      window.addEventListener("resize", resizeViewport);
+      resizeViewport();
+    </script>
+  </body>
+</html>
