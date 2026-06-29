@@ -1,6 +1,6 @@
 # Agentyx Motion Design System
 
-This document defines the visual and motion language for Agentyx videos.
+This document defines the visual and motion language for Agentyx **videos**. For presentation slides and pitch decks, use the Presentation Theme in [`brand-system/colors_and_type.css`](../brand-system/colors_and_type.css) (`.ax-presentation`) and [`brand-system/presentation.css`](../brand-system/presentation.css).
 
 ## Brand Feel
 
