@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Agentyx PDF Report Template</title>
+    <!-- Link to central design system -->
+    <link rel="stylesheet" href="../../brand-system/colors_and_type.css" />
+    <style>
+      /* Reset for print page layouts */
+      html, body {
+        margin: 0;
+        padding: 0;
+        background: #f1f5f9;
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+      }
+
+      /* Wrapper to hold page previews */
+      .document-preview {
+        max-width: 800px;
+        margin: 40px auto;
+        display: flex;
+        flex-direction: column;
+        gap: 30px;
+      }
+
+      /* Print page specifications */
+      .page {
+        position: relative;
+        width: 100%;
+        height: 1122px; /* A4 aspect ratio (210mm x 297mm) */
+        background: var(--ax-bg); /* Controlled by ax-light scope below */
+        box-sizing: border-box;
+        padding: var(--ax-space-16) var(--ax-space-12);
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        box-shadow: 0 10px 30px rgba(15,23,42,0.06);
+        border-radius: var(--ax-radius-lg);
+        overflow: hidden;
+      }
+
+      .page-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        border-bottom: 2px solid var(--ax-border);
+        padding-bottom: var(--ax-space-3);
+      }
+
+      .logo-group {
+        display: flex;
+        align-items: center;
+        gap: var(--ax-space-2);
+      }
+
+      .logo-group img {
+        width: 24px;
+        height: 24px;
+        object-fit: contain;
+      }
+
+      .logo-group span {
+        font-family: var(--ax-font-heading);
+        font-size: var(--ax-fs-h6);
+        font-weight: 700;
+        color: var(--ax-fg);
+      }
+
+      .page-content {
+        flex-grow: 1;
+        margin-top: var(--ax-space-10);
+      }
+
+      .page-footer {
+        display: flex;
+        justify-content: space-between;
+        border-top: 1px solid var(--ax-divider);
+        padding-top: var(--ax-space-3);
+        font-family: var(--ax-font-mono);
+        font-size: var(--ax-fs-meta);
+        color: var(--ax-fg-subtle);
+      }
+
+      /* Cover Page Custom Styles */
+      .cover-content {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: flex-start;
+        height: 80%;
+        padding-left: var(--ax-space-4);
+      }
+
+      /* Formatting elements */
+      .grid-2 {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: var(--ax-space-6);
+      }
+
+      .table-metrics {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: var(--ax-space-4);
+      }
+
+      .table-metrics th,
+      .table-metrics td {
+        padding: var(--ax-space-3);
+        text-align: left;
+        border-bottom: 1px solid var(--ax-border);
+      }
+
+      .table-metrics th {
+        font-family: var(--ax-font-mono);
+        font-size: var(--ax-fs-body-sm);
+        text-transform: uppercase;
+        color: var(--ax-fg-subtle);
+        background: var(--ax-bg-elevated);
+      }
+
+      .table-metrics td {
+        font-family: var(--ax-font-body);
+        font-size: var(--ax-fs-body-sm);
+        color: var(--ax-fg-muted);
+      }
+
+      /* Print specific overrides */
+      @media print {
+        body {
+          background: none;
+        }
+
+        .document-preview {
+          margin: 0;
+          max-width: none;
+          gap: 0;
+        }
+
+        .page {
+          box-shadow: none;
+          border-radius: 0;
+          page-break-after: always;
+          height: 100vh; /* Fit printer page */
+        }
+      }
+    </style>
+  </head>
+  <!-- Load document default as light mode -->
+  <body class="ax-light">
+    
+    <div class="document-preview">
+      
+      <!-- PAGE 1: COVER PAGE -->
+      <div class="page">
+        <div class="page-header">
+          <div class="logo-group">
+            <img src="../../brand-system/assets/agentyx-logo.png" alt="Logo" />
+            <span>Agentyx</span>
+          </div>
+          <div class="ax-eyebrow" style="color: var(--ax-fg-subtle)">INFORME DE CAPACIDAD</div>
+        </div>
+
+        <div class="page-content cover-content">
+          <div class="ax-eyebrow" style="color: var(--ax-brand); margin-bottom: var(--ax-space-3);">ANÁLISIS DE RETORNO (ROI)</div>
+          <h1 class="ax-h1" style="font-size: 48px; margin-bottom: var(--ax-space-4); font-weight: 800; line-height: 1.1;">
+            Automatización de Procesos de Ventas y CRM
+          </h1>
+          <p class="ax-body-lg" style="max-width: 600px; color: var(--ax-fg-muted); line-height: 1.6; margin-bottom: var(--ax-space-8)">
+            Informe detallado sobre la viabilidad, tiempos de respuesta y eficiencia de costos al implementar empleados de IA autónomos.
+          </p>
+          <div style="border-left: 4px solid var(--ax-brand); padding-left: var(--ax-space-4); margin-top: var(--ax-space-4);">
+            <p class="ax-meta" style="margin: 0; font-weight: 600;">Preparado para: Concesionarias del Sur</p>
+            <p class="ax-meta" style="margin: 4px 0 0;">Fecha: 29 de Junio, 2026 · Por: Lev Innovation</p>
+          </div>
+        </div>
+
+        <div class="page-footer">
+          <span>Confidencial · Agentyx</span>
+          <span>Página 1</span>
+        </div>
+      </div>
+
+      <!-- PAGE 2: METRICS & DETAILS -->
+      <div class="page">
+        <div class="page-header">
+          <div class="logo-group">
+            <img src="../../brand-system/assets/agentyx-logo.png" alt="Logo" />
+            <span>Agentyx</span>
+          </div>
+          <div class="ax-eyebrow" style="color: var(--ax-fg-subtle)">MÉTRICAS CLAVE</div>
+        </div>
+
+        <div class="page-content">
+          <h2 class="ax-h2" style="font-size: var(--ax-fs-h3); margin-bottom: var(--ax-space-4)">Métricas de Impacto Operativo</h2>
+          <p class="ax-body" style="margin-bottom: var(--ax-space-6)">
+            Los resultados observados demuestran una reducción inmediata en el tiempo de procesamiento y una eliminación total de los cuellos de botella en la atención de leads de entrada.
+          </p>
+
+          <div class="grid-2" style="margin-bottom: var(--ax-space-8)">
+            <div style="background: var(--ax-bg-elevated); padding: var(--ax-space-4); border-radius: var(--ax-radius-md); border: 1px solid var(--ax-border)">
+              <div class="ax-eyebrow" style="color: var(--ax-fg-subtle)">VELOCIDAD</div>
+              <h3 class="ax-h3" style="color: var(--ax-brand); font-family: var(--ax-font-mono); font-size: 32px; margin-top: var(--ax-space-2)">4 Minutos</h3>
+              <p class="ax-body-sm" style="margin: var(--ax-space-2) 0 0;">Tiempo promedio de respuesta end-to-end (CRM a email).</p>
+            </div>
+            <div style="background: var(--ax-bg-elevated); padding: var(--ax-space-4); border-radius: var(--ax-radius-md); border: 1px solid var(--ax-border)">
+              <div class="ax-eyebrow" style="color: var(--ax-fg-subtle)">CAPACIDAD</div>
+              <h3 class="ax-h3" style="color: var(--ax-brand); font-family: var(--ax-font-mono); font-size: 32px; margin-top: var(--ax-space-2)">24/7</h3>
+              <p class="ax-body-sm" style="margin: var(--ax-space-2) 0 0;">Atención constante sin importar horarios ni fines de semana.</p>
+            </div>
+          </div>
+
+          <h3 class="ax-h4" style="margin-bottom: var(--ax-space-2)">Detalle del Flujo de Trabajo</h3>
+          <table class="table-metrics">
+            <thead>
+              <tr>
+                <th>Fase del Proceso</th>
+                <th>Acción del AI Employee</th>
+                <th>Sistemas Integrados</th>
+                <th>Estado</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Recepción de Lead</td>
+                <td>Clasifica intención del cliente y extrae parámetros clave.</td>
+                <td>WhatsApp, Email</td>
+                <td style="color: var(--ax-success); font-weight: bold;">Completado</td>
+              </tr>
+              <tr>
+                <td>Validación de Stock</td>
+                <td>Valida inventario en tiempo real según catálogo.</td>
+                <td>ERP ERP</td>
+                <td style="color: var(--ax-success); font-weight: bold;">Completado</td>
+              </tr>
+              <tr>
+                <td>Cotización</td>
+                <td>Genera cotización oficial en PDF y la envía.</td>
+                <td>Email, CRM</td>
+                <td style="color: var(--ax-success); font-weight: bold;">Completado</td>
+              </tr>
+              <tr>
+                <td>Seguimiento</td>
+                <td>Crea recordatorio de llamada si no hay respuesta en 24h.</td>
+                <td>CRM CRM</td>
+                <td style="color: var(--ax-success); font-weight: bold;">Completado</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="page-footer">
+          <span>Confidencial · Agentyx</span>
+          <span>Página 2</span>
+        </div>
+      </div>
+
+    </div>
+  </body>
+</html>
