@@ -67,9 +67,57 @@ When creating animated or interactive components (such as in videos, web slides,
 *   Dashboard mockups should use light-themed HTML scopes (`.ax-light`) to mimic the actual Agentyx product interface.
 
 ### Presentations & Slides (`/presentations`)
-*   Standard 16:9 ratio using dark-first headers and slides.
-*   Use radial gradients (`rgba(37,99,235,0.18)`) centered on title slides.
-*   Integrations should be represented with rounded, glowing system chips.
+*   Standard 16:9 ratio using the **Presentation Theme** (`.ax-presentation`) — light blue Agentyx style from the official pitch deck.
+*   Import [`presentation.css`](presentation.css) and optionally [`lev-brand-system/colors_and_type.css`](../lev-brand-system/colors_and_type.css) for Lev Innovation lockups.
+*   Use radial gradients (`rgba(37,99,235,0.12)`) centered on title slides.
+*   Integrations should use official line-art icons from [`assets/icons/`](assets/icons/) — not generic Lucide icons.
+*   For parent company branding, use `.lev-lockup` from Lev Innovation design system.
+
+### Icon Library
+
+Official icons live in `brand-system/assets/icons/` and the sprite sheet [`icons.svg`](icons.svg).
+
+| Category | Icons | Usage |
+|----------|-------|-------|
+| Integration | CRM, Email, ERP, Chat | System chips, hub diagrams |
+| Process | Cube iso, Engine, Trigger, Brain, Target | Workflow steps, execution flow |
+| UI | Check, X, Shield, Finance, etc. | Lists, badges, row cards |
+
+**Rules:**
+- Line icons: stroke `#0F172A`, weight 1.75, rounded caps — on light presentation backgrounds
+- 3D cubes: use `--ax-cube-top/front/side` tokens — only for process/engine slots
+- Do not mix Lucide generic icons in Agentyx presentation decks
+- Reference via sprite: `<svg class="ax-icon"><use href="../../brand-system/icons.svg#ax-crm"/></svg>`
+
+---
+
+## 5. Presentation Theme (`.ax-presentation`)
+
+For B2B slides and pitch decks, wrap content in `.ax-presentation` scope. This applies light blue tokens without affecting the dark default used by videos.
+
+### Colors (Presentation Theme)
+*   **Canvas (`--ax-bg`)**: `#F4F6FA`
+*   **Cards (`--ax-surface`)**: `#FFFFFF`
+*   **Inverted panels (`--ax-surface-inverted`)**: `#0F172A`
+*   **Headline highlight (`--ax-brand-highlight`)**: `#2563EB`
+*   **Photo overlay (`--ax-photo-overlay`)**: `rgba(15, 23, 42, 0.72)`
+
+### Components
+See [`presentation.css`](presentation.css): `.ax-slide-cover`, `.ax-card-light`, `.ax-process-cubes`, `.ax-integration-hub`, `.ax-split-contrast`, `.ax-footer-statement`, etc.
+
+### Lev Innovation Co-branding
+When slides need "by Lev innovation", import Lev design system and use `.lev-lockup`. See [`lev-brand-system/lev-brand-guidelines.md`](../lev-brand-system/lev-brand-guidelines.md).
+
+---
+
+## 6. Dual Brand Architecture
+
+| Brand | Design System | Primary use |
+|-------|---------------|-------------|
+| **Agentyx** | `brand-system/` | Product, slides, videos, banners |
+| **Lev Innovation** | `lev-brand-system/` | Parent company lockup, black panels, corporate |
+
+Videos use Agentyx **dark** theme (`:root`). Presentations use Agentyx **presentation** theme (`.ax-presentation`).
 
 ### Documents & Reports (`/documents`)
 *   Designed primarily for PDF generation or printing (A4 or Letter size).

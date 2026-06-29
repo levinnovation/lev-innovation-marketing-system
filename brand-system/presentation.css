@@ -1,0 +1,561 @@
+/* ============================================================
+   AGENTYX PRESENTATION COMPONENTS — presentation.css
+   Slide layouts and UI patterns from the official pitch deck PDF.
+   Requires colors_and_type.css; use inside .ax-presentation scope.
+   ============================================================ */
+
+/* ---- Icon helper ---- */
+.ax-icon {
+  display: inline-block;
+  width: var(--ax-icon-size-md, 24px);
+  height: var(--ax-icon-size-md, 24px);
+  color: var(--ax-icon-stroke, currentColor);
+  flex-shrink: 0;
+}
+
+.ax-icon-sm { width: var(--ax-icon-size-sm, 16px); height: var(--ax-icon-size-sm, 16px); }
+.ax-icon-lg { width: var(--ax-icon-size-lg, 48px); height: var(--ax-icon-size-lg, 48px); }
+
+.ax-icon-wrap {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  flex-shrink: 0;
+  color: var(--ax-icon-stroke);
+}
+
+.ax-icon-wrap img,
+.ax-icon-wrap svg {
+  width: var(--ax-icon-size-md);
+  height: var(--ax-icon-size-md);
+}
+
+/* ---- Slide structure ---- */
+.ax-deck-viewport {
+  position: relative;
+  width: 1920px;
+  height: 1080px;
+  background: var(--ax-bg);
+  overflow: hidden;
+}
+
+.ax-slide {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  padding: var(--ax-space-12) var(--ax-space-20);
+  box-sizing: border-box;
+  display: none;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.ax-slide.active {
+  display: flex;
+}
+
+.ax-slide-cover {
+  justify-content: center !important;
+  align-items: center;
+  text-align: center;
+  position: relative;
+}
+
+.ax-slide-cover .ax-radial-glow {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at 50% 45%, rgba(37,99,235,0.12), transparent 50%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.ax-slide-cover .ax-cover-content {
+  position: relative;
+  z-index: 1;
+  max-width: 1300px;
+}
+
+.ax-slide-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  border-bottom: 1px solid var(--ax-divider);
+  padding-bottom: var(--ax-space-4);
+}
+
+.ax-slide-header .ax-title-group {
+  display: flex;
+  flex-direction: column;
+  gap: var(--ax-space-2);
+}
+
+.ax-slide-header .ax-brand-lockup {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: var(--ax-space-1);
+}
+
+.ax-slide-content {
+  flex-grow: 1;
+  margin-top: var(--ax-space-10);
+  min-height: 0;
+}
+
+.ax-slide-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-top: 1px solid var(--ax-divider);
+  padding-top: var(--ax-space-4);
+  font-family: var(--ax-font-mono);
+  font-size: var(--ax-fs-meta);
+  color: var(--ax-fg-subtle);
+}
+
+/* ---- Photo background ---- */
+.ax-photo-bg {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  background-size: cover;
+  background-position: center;
+}
+
+.ax-photo-bg::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: var(--ax-photo-overlay);
+}
+
+.ax-photo-bg-light::after {
+  background: var(--ax-photo-overlay-light);
+}
+
+.ax-slide > *:not(.ax-photo-bg):not(.ax-cyan-curves-bg) {
+  position: relative;
+  z-index: 1;
+}
+
+/* ---- Cards ---- */
+.ax-card-light {
+  background: var(--ax-surface);
+  border: 1px solid var(--ax-border);
+  border-radius: var(--ax-radius-sm);
+  padding: var(--ax-space-6);
+  box-shadow: var(--ax-card-shadow-soft);
+}
+
+.ax-card-dark {
+  background: var(--ax-surface-inverted);
+  color: #ffffff;
+  border-radius: var(--ax-radius-sm);
+  padding: var(--ax-space-8);
+}
+
+.ax-card-dark .ax-body,
+.ax-card-dark .ax-body-sm {
+  color: rgba(255, 255, 255, 0.78);
+}
+
+.ax-card-light h3,
+.ax-card-light h4 {
+  font-family: var(--ax-font-heading);
+  font-weight: 700;
+  color: var(--ax-fg);
+  margin: 0 0 var(--ax-space-3);
+}
+
+.ax-card-light ul {
+  margin: 0;
+  padding-left: var(--ax-space-5);
+  color: var(--ax-fg-muted);
+  font-size: var(--ax-fs-body-sm);
+  line-height: var(--ax-lh-loose);
+}
+
+/* ---- Row card (icon + text) ---- */
+.ax-row-card {
+  display: flex;
+  align-items: center;
+  gap: var(--ax-space-5);
+  background: var(--ax-surface);
+  border: 1px solid var(--ax-border);
+  border-radius: var(--ax-radius-md);
+  padding: var(--ax-space-4) var(--ax-space-6);
+  margin-bottom: var(--ax-space-3);
+}
+
+.ax-row-card-text h4 {
+  margin: 0;
+  font-size: var(--ax-fs-h6);
+  color: var(--ax-fg);
+  font-family: var(--ax-font-heading);
+  font-weight: 600;
+}
+
+.ax-row-card-text p {
+  margin: 4px 0 0;
+  font-size: var(--ax-fs-body-sm);
+  color: var(--ax-fg-muted);
+}
+
+/* ---- Badges / pills ---- */
+.ax-badge-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--ax-space-3);
+}
+
+.ax-pill-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--ax-space-2);
+  padding: 8px var(--ax-space-4);
+  border-radius: var(--ax-radius-pill);
+  background: var(--ax-surface);
+  border: 1px solid var(--ax-border);
+  font-family: var(--ax-font-mono);
+  font-size: var(--ax-fs-meta);
+  color: var(--ax-fg-2);
+}
+
+.ax-pill-badge .ax-icon {
+  color: var(--ax-icon-stroke);
+}
+
+/* ---- Checklists ---- */
+.ax-checklist {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--ax-space-3);
+}
+
+.ax-checklist li {
+  font-family: var(--ax-font-body);
+  font-size: var(--ax-fs-body);
+  color: var(--ax-fg-muted);
+  display: flex;
+  align-items: flex-start;
+  gap: var(--ax-space-3);
+}
+
+.ax-checklist li .ax-icon {
+  margin-top: 2px;
+}
+
+.ax-checklist-success .ax-icon { color: var(--ax-success); }
+.ax-checklist-danger .ax-icon { color: var(--ax-danger); }
+
+/* ---- List box (problem vs solution) ---- */
+.ax-list-box-group {
+  display: flex;
+  flex-direction: column;
+  gap: var(--ax-space-6);
+}
+
+.ax-list-box-title {
+  display: flex;
+  align-items: center;
+  gap: var(--ax-space-2);
+  font-family: var(--ax-font-heading);
+  font-size: var(--ax-fs-h6);
+  font-weight: 700;
+  letter-spacing: var(--ax-tracking-tight);
+}
+
+/* ---- Process cubes (6-step flow) ---- */
+.ax-process-cubes {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0;
+  position: relative;
+  padding: var(--ax-space-8) 0;
+}
+
+.ax-process-cubes::before {
+  content: "";
+  position: absolute;
+  left: 8%;
+  right: 8%;
+  top: 50%;
+  height: 4px;
+  background: var(--ax-surface-inverted);
+  transform: translateY(-50%);
+  z-index: 0;
+}
+
+.ax-process-cube {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--ax-space-4);
+  z-index: 1;
+}
+
+.ax-process-cube:nth-child(even) {
+  flex-direction: column-reverse;
+}
+
+.ax-process-cube .ax-cube-icon {
+  width: 56px;
+  height: 56px;
+}
+
+.ax-process-cube-label {
+  text-align: center;
+  max-width: 140px;
+}
+
+.ax-process-cube-label strong {
+  display: block;
+  font-family: var(--ax-font-heading);
+  font-size: var(--ax-fs-body-sm);
+  font-weight: 700;
+  color: var(--ax-fg);
+  margin-bottom: 4px;
+}
+
+.ax-process-cube-label span {
+  font-size: var(--ax-fs-meta);
+  color: var(--ax-fg-muted);
+  line-height: var(--ax-lh-normal);
+}
+
+/* ---- Integration hub ---- */
+.ax-integration-hub {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 400px;
+}
+
+.ax-integration-hub-circle {
+  width: 380px;
+  height: 380px;
+  border-radius: 50%;
+  background: #f9f9f7;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--ax-space-3);
+  position: relative;
+}
+
+.ax-integration-hub-circle .ax-engine-icon {
+  width: 80px;
+  height: 80px;
+}
+
+.ax-integration-chip {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--ax-space-2);
+  text-align: center;
+}
+
+.ax-integration-chip .ax-icon {
+  width: 40px;
+  height: 40px;
+}
+
+.ax-integration-chip span {
+  font-family: var(--ax-font-heading);
+  font-size: var(--ax-fs-body-sm);
+  font-weight: 600;
+  color: var(--ax-fg);
+  max-width: 100px;
+}
+
+.ax-integration-chip-top { top: 0; left: 50%; transform: translateX(-50%); }
+.ax-integration-chip-right { right: 0; top: 50%; transform: translateY(-50%); }
+.ax-integration-chip-bottom { bottom: 0; left: 50%; transform: translateX(-50%); }
+.ax-integration-chip-left { left: 0; top: 50%; transform: translateY(-50%); }
+
+/* ---- Split contrast (Past / Future) ---- */
+.ax-split-contrast {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  min-height: 100%;
+  margin: calc(-1 * var(--ax-space-12)) calc(-1 * var(--ax-space-20));
+  width: calc(100% + 2 * var(--ax-space-20));
+}
+
+.ax-split-contrast .ax-split-dark {
+  background: #000000;
+  color: #ffffff;
+  padding: var(--ax-space-12) var(--ax-space-10);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  gap: var(--ax-space-6);
+}
+
+.ax-split-contrast .ax-split-light {
+  background: #f9f9f7;
+  color: #0f172a;
+  padding: var(--ax-space-12) var(--ax-space-10);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  gap: var(--ax-space-6);
+}
+
+.ax-split-contrast .ax-split-icon {
+  width: 120px;
+  height: 120px;
+  color: currentColor;
+}
+
+.ax-split-contrast ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  text-align: left;
+  max-width: 320px;
+}
+
+.ax-split-contrast li {
+  padding: var(--ax-space-2) 0;
+  font-size: var(--ax-fs-body);
+  border-bottom: 1px solid rgba(128,128,128,0.2);
+}
+
+/* ---- Staircase steps ---- */
+.ax-step-staircase {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: var(--ax-space-6);
+  padding-right: 40%;
+}
+
+.ax-step-staircase-item {
+  display: flex;
+  align-items: baseline;
+  gap: var(--ax-space-3);
+  font-family: var(--ax-font-body);
+  font-size: var(--ax-fs-body-lg);
+  color: var(--ax-fg);
+}
+
+.ax-step-staircase-item strong {
+  font-weight: 700;
+}
+
+/* ---- Footer statement bar ---- */
+.ax-footer-statement {
+  background: var(--ax-surface-inverted);
+  color: #ffffff;
+  text-align: center;
+  padding: var(--ax-space-5) var(--ax-space-8);
+  font-family: var(--ax-font-body);
+  font-size: var(--ax-fs-body-lg);
+  font-weight: 500;
+  margin: var(--ax-space-6) calc(-1 * var(--ax-space-20)) calc(-1 * var(--ax-space-12));
+  width: calc(100% + 2 * var(--ax-space-20));
+}
+
+/* ---- Stat sidebar ---- */
+.ax-stat-sidebar {
+  display: flex;
+  flex-direction: column;
+  gap: var(--ax-space-6);
+}
+
+.ax-stat-box {
+  background: var(--ax-surface);
+  border: 1px solid var(--ax-border);
+  border-radius: var(--ax-radius-xl);
+  padding: var(--ax-space-8);
+  text-align: left;
+}
+
+.ax-stat-box .ax-stat-number {
+  font-family: var(--ax-font-heading);
+  font-size: 96px;
+  font-weight: 800;
+  line-height: 1;
+  letter-spacing: var(--ax-tracking-tight);
+  color: var(--ax-brand-highlight);
+  margin-bottom: var(--ax-space-3);
+}
+
+/* ---- Grid helpers ---- */
+.ax-grid-2 {
+  display: grid;
+  grid-template-columns: 1fr 1.2fr;
+  gap: var(--ax-space-12);
+  height: 100%;
+  align-items: start;
+}
+
+.ax-grid-3 {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--ax-space-6);
+}
+
+.ax-grid-5 {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: var(--ax-space-4);
+}
+
+/* ---- Logo group ---- */
+.ax-logo-group {
+  display: flex;
+  align-items: center;
+  gap: var(--ax-space-3);
+}
+
+.ax-logo-group img {
+  width: 40px;
+  height: 40px;
+  object-fit: contain;
+}
+
+.ax-logo-group span {
+  font-family: var(--ax-font-heading);
+  font-size: var(--ax-fs-h4);
+  font-weight: 700;
+  color: var(--ax-fg);
+  letter-spacing: var(--ax-tracking-wide);
+}
+
+/* ---- Background curves (subtle, presentation) ---- */
+.ax-cyan-curves-bg {
+  position: absolute;
+  inset: -12%;
+  opacity: 0.08;
+  pointer-events: none;
+  z-index: 0;
+  color: var(--ax-brand-soft);
+}
+
+/* ---- Print ---- */
+@media print {
+  .ax-presentation,
+  .ax-deck-viewport {
+    background: var(--ax-bg) !important;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+}

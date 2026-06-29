@@ -173,6 +173,68 @@
 }
 
 /* ============================================================
+   COLOR TOKENS — PRESENTATION (pitch deck / B2B slides)
+   Light blue Agentyx theme from official pitch deck PDF.
+   Wrap decks in .ax-presentation — does NOT replace :root dark for videos.
+   ============================================================ */
+.ax-presentation {
+  --ax-bg:              #F4F6FA;
+  --ax-bg-elevated:     #FFFFFF;
+  --ax-surface:           #FFFFFF;
+  --ax-surface-2:         #E8EDF5;
+  --ax-surface-inverted:  #0F172A;
+  --ax-border:            #D2DAE4;
+  --ax-border-strong:     #94A3B8;
+  --ax-divider:           #E2E8F0;
+
+  --ax-fg:                #0F172A;
+  --ax-fg-1:              #1E293B;
+  --ax-fg-2:              #334155;
+  --ax-fg-muted:          #475569;
+  --ax-fg-subtle:         #64748B;
+  --ax-fg-disabled:       #94A3B8;
+
+  --ax-brand-highlight:   #2563EB;
+  --ax-brand:             #2563EB;
+  --ax-brand-strong:      #1D4ED8;
+  --ax-brand-soft:        #3B82F6;
+  --ax-brand-tint:        rgba(37, 99, 235, 0.08);
+  --ax-brand-glow:        rgba(37, 99, 235, 0.12);
+  --ax-brand-200:         #BFDBFE;
+  --ax-brand-100:         #DBEAFE;
+
+  --ax-cyan:              #2563EB;
+  --ax-cyan-soft:         #3B82F6;
+  --ax-cyan-tint:         rgba(37, 99, 235, 0.08);
+
+  --ax-success:           #16A34A;
+  --ax-danger:            #DC2626;
+
+  --ax-photo-overlay:     rgba(15, 23, 42, 0.72);
+  --ax-photo-overlay-light: rgba(244, 246, 250, 0.88);
+
+  --ax-icon-stroke:       #0F172A;
+  --ax-icon-size-sm:      16px;
+  --ax-icon-size-md:      24px;
+  --ax-icon-size-lg:      48px;
+
+  --ax-cube-top:          #3B82F6;
+  --ax-cube-front:        #2563EB;
+  --ax-cube-side:         #1E3A5F;
+
+  --ax-card-shadow:       0 1px 0 rgba(15,23,42,0.04), 0 8px 24px -12px rgba(15,23,42,0.12);
+  --ax-card-shadow-soft:  0 1px 2px rgba(15,23,42,0.04), 0 4px 16px -8px rgba(15,23,42,0.10);
+
+  --ax-hero-radial:
+      radial-gradient(circle at 50% 42%, rgba(37,99,235,0.10), transparent 50%),
+      linear-gradient(to bottom, #F4F6FA, #EEF2F8 96%);
+}
+
+.ax-presentation .ax-highlight {
+  color: var(--ax-brand-highlight);
+}
+
+/* ============================================================
    SEMANTIC TYPOGRAPHY CLASSES
    ============================================================ */
 .ax-display, .ax-h1, .ax-h2, .ax-h3, .ax-h4, .ax-h5, .ax-h6 {
