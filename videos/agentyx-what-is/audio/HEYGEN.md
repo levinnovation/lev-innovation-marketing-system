@@ -1,13 +1,10 @@
 # HeyGen avatar integration
 
-No HeyGen API key was available in this environment. A **placeholder** `avatar.mp4` (dark panel, 22s) satisfies the HyperFrames composition slot.
+This project uses a real HeyGen avatar export for the PiP and a separate extracted WAV for the audible narration.
 
-## Replace with your HeyGen export
+## Current assets
 
-1. Open [HeyGen](https://app.heygen.com) → create video with the script from `../narration.txt`
-2. Select your avatar + Spanish voice
-3. Export MP4 → save as `avatar.mp4` in this folder
-4. Optional: mute `../narration.wav` in `index.html` and set avatar `data-volume="1"` if using HeyGen audio only
-5. Re-render: `npm run render:what-is`
+- `avatar.mp4` — HeyGen avatar video, muted in HyperFrames
+- `heygen-narration.wav` — extracted audio track used by `../index.html`
 
-PiP appears bottom-right during beats 1 (0–4s) and 5 (18.2–21.6s).
+PiP appears as a tight circular face crop in the bottom-right corner during beat 1 (0–4s) and beat 5 (18.2–22.188s).

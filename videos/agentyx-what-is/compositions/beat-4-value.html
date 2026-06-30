@@ -183,8 +183,8 @@
       window.__timelines = window.__timelines || {};
       const tl = gsap.timeline({ paused: true, defaults: { ease: "power3.out" } });
       tl.fromTo(".eyebrow", { opacity: 0, y: -16 }, { opacity: 1, y: 0, duration: 0.4 }, 0.05);
-      tl.fromTo(".before", { opacity: 0, x: -40 }, { opacity: 0.55, x: 0, duration: 0.55 }, 0.15);
-      tl.fromTo(".after", { opacity: 0, x: 40 }, { opacity: 1, x: 0, duration: 0.55 }, 0.25);
+      tl.fromTo(".before", { opacity: 0 }, { opacity: 0.55, duration: 0.55 }, 0.15);
+      tl.fromTo(".after", { opacity: 0 }, { opacity: 1, duration: 0.55 }, 0.25);
       tl.fromTo(".kpi", { opacity: 0, y: 36 }, { opacity: 1, y: 0, duration: 0.5, stagger: 0.1 }, 0.65);
       tl.fromTo(".k1 .num", { textContent: "0" }, { textContent: "24/7", duration: 0.01, snap: { textContent: 1 } }, 1.0);
       tl.to(".k1", { borderColor: "rgba(34,211,238,0.45)", duration: 0.4 }, 1.0);
